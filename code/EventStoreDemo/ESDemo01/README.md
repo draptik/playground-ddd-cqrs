@@ -1,4 +1,4 @@
-Code from
+Code from Chapter 22 of
 
 Patterns, Prinicples and Practices of Domain-Driven Design
 
