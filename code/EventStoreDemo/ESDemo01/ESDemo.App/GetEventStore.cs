@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ESDemo.App.Infrastructure;
 using EventStore.ClientAPI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -55,7 +56,7 @@ namespace ESDemo.App
             var amount = (toVersion - fromVersion) + 1;
             var events = this.esConn.ReadStreamEventsForwardAsync(this.StreamName(streamName), fromVersion, amount, false).Result;
 
-            return events.Events.Select(e => (DomainEvent) this.RebuildEvent(e));
+            return events.Events.Select(e => (DomainEvent)RebuildEvent(e));
         }
 
         private object RebuildEvent(ResolvedEvent eventStoreEvent)
