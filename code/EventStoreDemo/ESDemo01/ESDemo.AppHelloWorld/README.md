@@ -16,7 +16,7 @@ Install EventStore [https://geteventstore.com/downloads/](https://geteventstore.
 
 ## Setup eventstore database
 
-Open a CMD shell as root and start the eventstore.
+Open a CMD shell as root and start the eventstore (your path might be different).
 
 ```
 $ cd \eventstore\EventStore-OSS-Win-v3.5.0
