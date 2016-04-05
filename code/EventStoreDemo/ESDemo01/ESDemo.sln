@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESDemo.AppHelloWorld", "ESDemo.AppHelloWorld\ESDemo.AppHelloWorld.csproj", "{CACACFB3-9C78-4D8E-AABE-48DE9EEC6F09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESDemo.Web", "ESDemo.Web\ESDemo.Web.csproj", "{CD0BFEA0-450E-4883-9FB4-80B95E7E3D0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESDemo.Infrastructure", "ESDemo.Infrastructure\ESDemo.Infrastructure.csproj", "{64DE1EF7-8E94-4621-BAFB-F094F3E6E8B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HelloWorld", "HelloWorld", "{4515A06E-39E0-47C6-AE9D-D3ABA92DC24A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +21,19 @@ Global
 		{CACACFB3-9C78-4D8E-AABE-48DE9EEC6F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CACACFB3-9C78-4D8E-AABE-48DE9EEC6F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CACACFB3-9C78-4D8E-AABE-48DE9EEC6F09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD0BFEA0-450E-4883-9FB4-80B95E7E3D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD0BFEA0-450E-4883-9FB4-80B95E7E3D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD0BFEA0-450E-4883-9FB4-80B95E7E3D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD0BFEA0-450E-4883-9FB4-80B95E7E3D0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64DE1EF7-8E94-4621-BAFB-F094F3E6E8B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64DE1EF7-8E94-4621-BAFB-F094F3E6E8B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64DE1EF7-8E94-4621-BAFB-F094F3E6E8B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64DE1EF7-8E94-4621-BAFB-F094F3E6E8B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CACACFB3-9C78-4D8E-AABE-48DE9EEC6F09} = {4515A06E-39E0-47C6-AE9D-D3ABA92DC24A}
 	EndGlobalSection
 EndGlobal
