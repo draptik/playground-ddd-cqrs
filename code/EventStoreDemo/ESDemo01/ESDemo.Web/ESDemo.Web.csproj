@@ -97,17 +97,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESDEmo.Domain\ESDEmo.Domain.csproj">
+      <Project>{0D2F91BD-0A57-4B5B-8F36-D86050B76D6A}</Project>
+      <Name>ESDEmo.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESDemo.Infrastructure\ESDemo.Infrastructure.csproj">
       <Project>{64DE1EF7-8E94-4621-BAFB-F094F3E6E8B0}</Project>
       <Name>ESDemo.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
