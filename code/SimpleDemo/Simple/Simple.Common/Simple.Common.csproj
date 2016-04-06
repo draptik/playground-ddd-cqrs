@@ -1,14 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A7403218-CD01-4B06-B3B7-15A26D195994}</ProjectGuid>
+    <ProjectGuid>1a7e18bb-c925-4041-8e4e-5ad0b8b6d9db</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simple.Contracts</RootNamespace>
-    <AssemblyName>Simple.Contracts</AssemblyName>
+    <RootNamespace>Simple.Common</RootNamespace>
+    <AssemblyName>Simple.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,28 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System"/>
+    
+    <Reference Include="System.Core"/>
+    <Reference Include="System.Xml.Linq"/>
+    <Reference Include="System.Data.DataSetExtensions"/>
+    
+    
+    <Reference Include="Microsoft.CSharp"/>
+    
+    <Reference Include="System.Data"/>
+    
+    <Reference Include="System.Net.Http"/>
+    
+    <Reference Include="System.Xml"/>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICustomerService.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Simple.CommandStack\Simple.CommandStack.csproj">
-      <Project>{11243476-E28B-4B60-B50C-1285F7FEA07D}</Project>
-      <Name>Simple.CommandStack</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simple.Domain\Simple.Domain.csproj">
-      <Project>{4C737428-DDAD-4284-82DB-E74FC17861D6}</Project>
-      <Name>Simple.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -61,4 +57,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-</Project>
+
+ </Project>

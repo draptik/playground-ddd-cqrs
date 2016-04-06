@@ -2,6 +2,8 @@
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
+using MassTransit;
+using Simple.Infrastructure.Modules;
 
 namespace Simple.Infrastructure
 {
@@ -21,10 +23,14 @@ namespace Simple.Infrastructure
             builder.RegisterAssemblyTypes(assembly).PropertiesAutowired();
 
             // Module registration
-            //builder.RegisterModule<SomeModule>();
-
+            builder.RegisterModule<ServiceModule>();
+            builder.RegisterModule<BusModule>();
 
             _container = builder.Build();
+
+            // Start service bus
+            var busControl = _container.Resolve<IBusControl>();
+            busControl.Start();
 
             // Set the dependency resolver for Web API.
             var webApiResolver = new AutofacWebApiDependencyResolver(_container);

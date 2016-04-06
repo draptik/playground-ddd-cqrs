@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A7403218-CD01-4B06-B3B7-15A26D195994}</ProjectGuid>
+    <ProjectGuid>{11243476-E28B-4B60-B50C-1285F7FEA07D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simple.Contracts</RootNamespace>
-    <AssemblyName>Simple.Contracts</AssemblyName>
+    <RootNamespace>Simple.CommandStack</RootNamespace>
+    <AssemblyName>Simple.CommandStack</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,18 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICustomerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Simple.CommandStack\Simple.CommandStack.csproj">
-      <Project>{11243476-E28B-4B60-B50C-1285F7FEA07D}</Project>
-      <Name>Simple.CommandStack</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simple.Domain\Simple.Domain.csproj">
-      <Project>{4C737428-DDAD-4284-82DB-E74FC17861D6}</Project>
-      <Name>Simple.Domain</Name>
-    </ProjectReference>
+    <Compile Include="Requests\CreateCustomerRequest.cs" />
+    <Compile Include="Responses\CreateCustomerResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

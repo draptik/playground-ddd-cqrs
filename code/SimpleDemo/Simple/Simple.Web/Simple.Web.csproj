@@ -103,7 +103,24 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Simple.CommandStack\Simple.CommandStack.csproj">
+      <Project>{11243476-e28b-4b60-b50c-1285f7fea07d}</Project>
+      <Name>Simple.CommandStack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Contracts\Simple.Contracts.csproj">
+      <Project>{A7403218-CD01-4B06-B3B7-15A26D195994}</Project>
+      <Name>Simple.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Domain\Simple.Domain.csproj">
+      <Project>{4C737428-DDAD-4284-82DB-E74FC17861D6}</Project>
+      <Name>Simple.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Infrastructure\Simple.Infrastructure.csproj">
+      <Project>{7690AE18-D473-4D53-968C-5E2EB7136327}</Project>
+      <Name>Simple.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

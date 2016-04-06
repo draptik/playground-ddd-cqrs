@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ESDemo.App")]
+[assembly: AssemblyTitle("Simple.CommandStack")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ESDemo.App")]
+[assembly: AssemblyProduct("Simple.CommandStack")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("cacacfb3-9c78-4d8e-aabe-48de9eec6f09")]
+[assembly: Guid("11243476-e28b-4b60-b50c-1285f7fea07d")]
 
 // Version information for an assembly consists of the following four values:
 //

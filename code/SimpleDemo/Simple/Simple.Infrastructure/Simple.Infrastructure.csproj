@@ -38,6 +38,18 @@
       <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MassTransit, Version=3.2.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\MassTransit.3.2.4\lib\net45\MassTransit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MassTransit.AutofacIntegration, Version=3.2.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\MassTransit.Autofac.3.2.4\lib\net45\MassTransit.AutofacIntegration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NewId, Version=2.1.3.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewId.2.1.3\lib\net45\NewId.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -65,11 +77,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IoCBuilder.cs" />
+    <Compile Include="Modules\BusModule.cs" />
+    <Compile Include="Modules\ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simple.ApplicationService\Simple.ApplicationService.csproj">
+      <Project>{4C4933CE-5061-4CB1-B9A7-22BB93414E7F}</Project>
+      <Name>Simple.ApplicationService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Contracts\Simple.Contracts.csproj">
+      <Project>{A7403218-CD01-4B06-B3B7-15A26D195994}</Project>
+      <Name>Simple.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
