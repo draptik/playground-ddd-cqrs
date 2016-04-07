@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="IoCBuilder.cs" />
     <Compile Include="Modules\BusModule.cs" />
+    <Compile Include="Modules\CommonModule.cs" />
     <Compile Include="Modules\ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +90,10 @@
     <ProjectReference Include="..\Simple.ApplicationService\Simple.ApplicationService.csproj">
       <Project>{4C4933CE-5061-4CB1-B9A7-22BB93414E7F}</Project>
       <Name>Simple.ApplicationService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Common\Simple.Common.csproj">
+      <Project>{1A7E18BB-C925-4041-8E4E-5AD0B8B6D9DB}</Project>
+      <Name>Simple.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simple.Contracts\Simple.Contracts.csproj">
       <Project>{A7403218-CD01-4B06-B3B7-15A26D195994}</Project>

@@ -23,6 +23,7 @@ namespace Simple.Infrastructure
             builder.RegisterAssemblyTypes(assembly).PropertiesAutowired();
 
             // Module registration
+            builder.RegisterModule<CommonModule>();
             builder.RegisterModule<ServiceModule>();
             builder.RegisterModule<BusModule>();
 
