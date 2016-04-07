@@ -43,12 +43,9 @@
     <Compile Include="EventSourcedAggregate.cs" />
     <Compile Include="DomainEvent.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="EventStream.cs" />
-    <Compile Include="EventWrapper.cs" />
     <Compile Include="Exceptions\OptimsticConcurrencyException.cs" />
     <Compile Include="IEventStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnapshotWrapper.cs" />
     <Compile Include="ValueObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

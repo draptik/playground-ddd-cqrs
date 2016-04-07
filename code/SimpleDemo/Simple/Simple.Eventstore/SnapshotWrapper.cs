@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Simple.Common
+namespace Simple.Eventstore
 {
     public class SnapshotWrapper
     {

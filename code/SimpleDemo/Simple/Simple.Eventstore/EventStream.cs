@@ -1,6 +1,7 @@
 ﻿using System;
+using Simple.Common;
 
-namespace Simple.Common
+namespace Simple.Eventstore
 {
     public class EventStream
     {
@@ -10,9 +11,9 @@ namespace Simple.Common
 
         public EventStream(Guid id, string type)
         {
-            Id = id;
-            Type = type;
-            Version = 0;
+            this.Id = id;
+            this.Type = type;
+            this.Version = 0;
         }
 
         public Guid Id { get; }
@@ -23,8 +24,8 @@ namespace Simple.Common
 
         public EventWrapper RegisterEvent(DomainEvent @event)
         {
-            Version++;
-            return new EventWrapper(@event, Version, Id, Type);
+            this.Version++;
+            return new EventWrapper(@event, this.Version, this.Id, this.Type);
         }
     }
 }
