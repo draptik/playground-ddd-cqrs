@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Common", "Simple.Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Eventstore", "Simple.Eventstore\Simple.Eventstore.csproj", "{769C1FAF-4101-4E1B-80E8-BF8BFF01A1D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Repositories", "Simple.Repositories\Simple.Repositories.csproj", "{B7D30178-217E-458C-B18C-2E8501555461}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{769C1FAF-4101-4E1B-80E8-BF8BFF01A1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{769C1FAF-4101-4E1B-80E8-BF8BFF01A1D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{769C1FAF-4101-4E1B-80E8-BF8BFF01A1D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7D30178-217E-458C-B18C-2E8501555461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7D30178-217E-458C-B18C-2E8501555461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7D30178-217E-458C-B18C-2E8501555461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7D30178-217E-458C-B18C-2E8501555461}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

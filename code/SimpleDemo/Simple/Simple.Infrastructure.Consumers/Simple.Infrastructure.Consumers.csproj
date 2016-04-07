@@ -68,6 +68,10 @@
       <Project>{1a7e18bb-c925-4041-8e4e-5ad0b8b6d9db}</Project>
       <Name>Simple.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simple.Contracts\Simple.Contracts.csproj">
+      <Project>{A7403218-CD01-4B06-B3B7-15A26D195994}</Project>
+      <Name>Simple.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

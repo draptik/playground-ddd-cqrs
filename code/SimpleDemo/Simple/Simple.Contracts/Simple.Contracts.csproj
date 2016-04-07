@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICustomerRepository.cs" />
     <Compile Include="ICustomerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -47,6 +48,10 @@
     <ProjectReference Include="..\Simple.CommandStack\Simple.CommandStack.csproj">
       <Project>{11243476-E28B-4B60-B50C-1285F7FEA07D}</Project>
       <Name>Simple.CommandStack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Common\Simple.Common.csproj">
+      <Project>{1A7E18BB-C925-4041-8E4E-5AD0B8B6D9DB}</Project>
+      <Name>Simple.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simple.Domain\Simple.Domain.csproj">
       <Project>{4C737428-DDAD-4284-82DB-E74FC17861D6}</Project>

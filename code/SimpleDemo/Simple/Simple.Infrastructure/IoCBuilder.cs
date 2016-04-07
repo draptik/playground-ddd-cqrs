@@ -26,6 +26,7 @@ namespace Simple.Infrastructure
             builder.RegisterModule<EventStoreModule>();
             builder.RegisterModule<ServiceModule>();
             builder.RegisterModule<BusModule>();
+            builder.RegisterModule<RepositoryModule>();
 
             _container = builder.Build();
 

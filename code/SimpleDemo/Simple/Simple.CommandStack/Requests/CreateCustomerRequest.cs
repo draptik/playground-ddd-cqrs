@@ -5,7 +5,7 @@ namespace Simple.CommandStack.Requests
 {
     public class CreateCustomerRequest : EventSourcedAggregate
     {
-        private string Address { get; }
+        public string Address { get; }
         public string Name { get; }
         public DateTime Timestamp { get; }
 
