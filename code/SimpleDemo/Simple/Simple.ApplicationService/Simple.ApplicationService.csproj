@@ -30,7 +30,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MassTransit, Version=3.2.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\MassTransit.3.2.4\lib\net45\MassTransit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NewId, Version=2.1.3.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewId.2.1.3\lib\net45\NewId.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,6 +61,10 @@
       <Project>{11243476-E28B-4B60-B50C-1285F7FEA07D}</Project>
       <Name>Simple.CommandStack</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simple.Common\Simple.Common.csproj">
+      <Project>{1a7e18bb-c925-4041-8e4e-5ad0b8b6d9db}</Project>
+      <Name>Simple.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simple.Contracts\Simple.Contracts.csproj">
       <Project>{A7403218-CD01-4B06-B3B7-15A26D195994}</Project>
       <Name>Simple.Contracts</Name>
@@ -56,6 +73,9 @@
       <Project>{4C737428-DDAD-4284-82DB-E74FC17861D6}</Project>
       <Name>Simple.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

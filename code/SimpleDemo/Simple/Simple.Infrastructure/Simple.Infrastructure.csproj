@@ -46,6 +46,10 @@
       <HintPath>..\packages\MassTransit.Autofac.3.2.4\lib\net45\MassTransit.AutofacIntegration.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MassTransit.RabbitMqTransport, Version=3.2.0.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\MassTransit.RabbitMQ.3.2.4\lib\net45\MassTransit.RabbitMqTransport.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NewId, Version=2.1.3.0, Culture=neutral, PublicKeyToken=b8e0e9f2f1e657fa, processorArchitecture=MSIL">
       <HintPath>..\packages\NewId.2.1.3\lib\net45\NewId.dll</HintPath>
       <Private>True</Private>
@@ -54,7 +58,12 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RabbitMQ.Client, Version=3.6.1.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.3.6.1\lib\net45\RabbitMQ.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -102,6 +111,10 @@
     <ProjectReference Include="..\Simple.Eventstore\Simple.Eventstore.csproj">
       <Project>{769C1FAF-4101-4E1B-80E8-BF8BFF01A1D5}</Project>
       <Name>Simple.Eventstore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Infrastructure.Consumers\Simple.Infrastructure.Consumers.csproj">
+      <Project>{18DD007F-4267-4A7A-A77C-30098BD3E2B3}</Project>
+      <Name>Simple.Infrastructure.Consumers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

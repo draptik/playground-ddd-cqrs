@@ -64,6 +64,10 @@
       <Project>{11243476-E28B-4B60-B50C-1285F7FEA07D}</Project>
       <Name>Simple.CommandStack</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simple.Common\Simple.Common.csproj">
+      <Project>{1a7e18bb-c925-4041-8e4e-5ad0b8b6d9db}</Project>
+      <Name>Simple.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
