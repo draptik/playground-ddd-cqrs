@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Simple.Common;
 using Simple.Common.Exceptions;
 
-namespace Simple.Common
+namespace Simple.Eventstore
 {
     public class EventStore : IEventStore
     {

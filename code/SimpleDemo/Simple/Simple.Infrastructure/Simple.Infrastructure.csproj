@@ -78,7 +78,7 @@
   <ItemGroup>
     <Compile Include="IoCBuilder.cs" />
     <Compile Include="Modules\BusModule.cs" />
-    <Compile Include="Modules\CommonModule.cs" />
+    <Compile Include="Modules\EventStoreModule.cs" />
     <Compile Include="Modules\ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,6 +98,10 @@
     <ProjectReference Include="..\Simple.Contracts\Simple.Contracts.csproj">
       <Project>{A7403218-CD01-4B06-B3B7-15A26D195994}</Project>
       <Name>Simple.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Eventstore\Simple.Eventstore.csproj">
+      <Project>{769C1FAF-4101-4E1B-80E8-BF8BFF01A1D5}</Project>
+      <Name>Simple.Eventstore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
