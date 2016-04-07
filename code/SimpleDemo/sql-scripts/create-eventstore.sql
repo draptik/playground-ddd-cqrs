@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[EventStreams]
 )
 
 
-CREATE TABLE [dbo].[Table]
+CREATE TABLE [dbo].[Events]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
     [EventType] NVARCHAR(50) NOT NULL, 

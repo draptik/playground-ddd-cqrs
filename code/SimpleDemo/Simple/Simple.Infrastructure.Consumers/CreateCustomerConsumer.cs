@@ -14,14 +14,13 @@ namespace Simple.Infrastructure.Consumers
 
         public CreateCustomerConsumer(ICustomerRepository repository)
         {
-            _repository = repository;
+            this._repository = repository;
         }
 
         public async Task Consume(ConsumeContext<CreateCustomerRequest> context)
         {
-            try
-            {
-                _repository.Add(Convert(context.Message));
+            try {
+                this._repository.Add(this.Convert(context.Message));
 
                 await context.RespondAsync(new CreateCustomerResponse
                 {
@@ -29,8 +28,7 @@ namespace Simple.Infrastructure.Consumers
                     Message = "OK"
                 });
             }
-            catch (Exception exc)
-            {
+            catch (Exception exc) {
                 await
                     context.RespondAsync(new CreateCustomerResponse
                     {
@@ -42,7 +40,7 @@ namespace Simple.Infrastructure.Consumers
 
         private Customer Convert(CreateCustomerRequest createCustomerRequest)
         {
-            return new Customer {Name = createCustomerRequest.Name, Address = createCustomerRequest.Address };
+            return new Customer(createCustomerRequest.Name, createCustomerRequest.Address);
         }
     }
 }

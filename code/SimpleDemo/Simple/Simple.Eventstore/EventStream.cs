@@ -25,7 +25,7 @@ namespace Simple.Eventstore
         public EventWrapper RegisterEvent(DomainEvent @event)
         {
             this.Version++;
-            return new EventWrapper(@event, this.Version, this.Id, this.Type);
+            return new EventWrapper(@event, this.Version, this.Id);
         }
     }
 }

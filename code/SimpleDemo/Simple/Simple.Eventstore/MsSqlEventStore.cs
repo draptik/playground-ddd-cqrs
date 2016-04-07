@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using Newtonsoft.Json;
 using Simple.Common;
 
 namespace Simple.Eventstore
@@ -29,7 +30,7 @@ namespace Simple.Eventstore
 
                 transaction.Commit();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
                 transaction.Rollback();
                 throw;
@@ -87,7 +88,7 @@ namespace Simple.Eventstore
                     command.Parameters.AddWithValue("EventType", @event.Type);
                     command.Parameters.AddWithValue("Version", @event.EventNumber);
                     //command.Parameters.AddWithValue("TimeStamp", @event.TimeStamp);
-                    command.Parameters.AddWithValue("Payload", @event.Event.ToString()); // TODO Serialize this!!
+                    command.Parameters.AddWithValue("Payload", JsonConvert.SerializeObject(@event.Event));
                     command.Parameters.AddWithValue("EventStreamId", @event.EventStreamId);
 
                     command.ExecuteNonQuery();

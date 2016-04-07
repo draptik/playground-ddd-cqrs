@@ -15,12 +15,12 @@ namespace Simple.Eventstore
 
         public int EventNumber { get; }
 
-        public EventWrapper(DomainEvent @event, int eventNumber, Guid streamStateId, string type)
+        public EventWrapper(DomainEvent @event, int eventNumber, Guid streamStateId)
         {
             this.Event = @event;
+            this.Type = @event.GetType().ToString();
             this.EventNumber = eventNumber;
             this.EventStreamId = streamStateId;
-            this.Type = type;
             this.Id = Guid.NewGuid();
         }
     }
