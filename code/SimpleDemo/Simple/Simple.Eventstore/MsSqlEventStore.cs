@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using Simple.Common;
@@ -16,8 +17,8 @@ namespace Simple.Eventstore
 
             var eventStream = new EventStream(new Guid(id), type);
 
-
-            var sqlConnection = new SqlConnection("credentials-todo");
+            var connectionString = ConfigurationManager.ConnectionStrings["SimpleEventStore"].ConnectionString;
+            var sqlConnection = new SqlConnection(connectionString);
 
             var transaction = sqlConnection.BeginTransaction();
             try
