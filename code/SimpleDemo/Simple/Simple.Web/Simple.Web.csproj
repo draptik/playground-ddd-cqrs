@@ -83,6 +83,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SimpleEventStore.mdf" />
+    <Content Include="App_Data\SimpleEventStore_log.ldf">
+      <DependentUpon>SimpleEventStore.mdf</DependentUpon>
+    </Content>
     <Content Include="packages.config" />
     <Content Include="README.md" />
     <None Include="Web.Debug.config">
@@ -126,9 +130,7 @@
       <Name>Simple.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

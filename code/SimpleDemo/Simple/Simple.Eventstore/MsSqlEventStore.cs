@@ -19,6 +19,7 @@ namespace Simple.Eventstore
 
             var connectionString = ConfigurationManager.ConnectionStrings["SimpleEventStore"].ConnectionString;
             var sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
 
             var transaction = sqlConnection.BeginTransaction();
             try
