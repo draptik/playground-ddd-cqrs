@@ -5,95 +5,95 @@ using Simple.Common.Exceptions;
 
 namespace Simple.Eventstore
 {
-    public class EventStore : IEventStore
-    {
-        public void CreateNewStream(string streamName, IEnumerable<DomainEvent> domainEvents)
-        {
-            var eventStream = new EventStream(streamName);
-            //_documentSession.Store(eventStream);
+    //public class EventStore : IEventStore
+    //{
+    //    public void CreateNewStream(string streamName, IEnumerable<DomainEvent> domainEvents)
+    //    {
+    //        var eventStream = new EventStream(streamName);
+    //        //_documentSession.Store(eventStream);
 
-            AppendEventsToStream(streamName, domainEvents);
-        }
+    //        AppendEventsToStream(streamName, domainEvents);
+    //    }
 
-        public void AppendEventsToStream(string streamName, IEnumerable<DomainEvent> domainEvents,
-            int? expectedVersion = null)
-        {
-            //var stream = _documentSession.Load<EventStream>(streamName);
+    //    public void AppendEventsToStream(string streamName, IEnumerable<DomainEvent> domainEvents,
+    //        int? expectedVersion = null)
+    //    {
+    //        //var stream = _documentSession.Load<EventStream>(streamName);
 
-            if (expectedVersion != null)
-            {
-                //CheckForConcurrencyError(expectedVersion, stream);
-            }
+    //        if (expectedVersion != null)
+    //        {
+    //            //CheckForConcurrencyError(expectedVersion, stream);
+    //        }
 
-            foreach (var @event in domainEvents)
-            {
-                //_documentSession.Store(stream.RegisterEvent(@event));
-            }
-        }
+    //        foreach (var @event in domainEvents)
+    //        {
+    //            //_documentSession.Store(stream.RegisterEvent(@event));
+    //        }
+    //    }
 
-        public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
-        {
-            // Get events from a specific version
-            //var eventWrappers = (from stream in _documentSession.Query<EventWrapper>()
-            //                      .Customize(x => x.WaitForNonStaleResultsAsOfNow())
-            //                     where stream.EventStreamId.Equals(streamName)
-            //                     && stream.EventNumber <= toVersion
-            //                     && stream.EventNumber >= fromVersion
-            //                     orderby stream.EventNumber
-            //                     select stream).ToList();
+    //    public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
+    //    {
+    //        // Get events from a specific version
+    //        //var eventWrappers = (from stream in _documentSession.Query<EventWrapper>()
+    //        //                      .Customize(x => x.WaitForNonStaleResultsAsOfNow())
+    //        //                     where stream.EventStreamId.Equals(streamName)
+    //        //                     && stream.EventNumber <= toVersion
+    //        //                     && stream.EventNumber >= fromVersion
+    //        //                     orderby stream.EventNumber
+    //        //                     select stream).ToList();
 
-            //if (eventWrappers.Count() == 0) return null;
+    //        //if (eventWrappers.Count() == 0) return null;
 
-            var events = new List<DomainEvent>();
+    //        var events = new List<DomainEvent>();
 
-            //foreach (var @event in eventWrappers)
-            //{
-            //    events.Add(@event.Event);
-            //}
+    //        //foreach (var @event in eventWrappers)
+    //        //{
+    //        //    events.Add(@event.Event);
+    //        //}
 
-            return events;
-        }
+    //        return events;
+    //    }
 
-        public void AddSnapshot<T>(string streamName, T snapshot)
-        {
-            var wrapper = new SnapshotWrapper
-            {
-                StreamName = streamName,
-                Snapshot = snapshot,
-                Created = DateTime.Now
-            };
+    //    public void AddSnapshot<T>(string streamName, T snapshot)
+    //    {
+    //        var wrapper = new SnapshotWrapper
+    //        {
+    //            StreamName = streamName,
+    //            Snapshot = snapshot,
+    //            Created = DateTime.Now
+    //        };
 
-            //_documentSession.Store(snapshot);
-        }
+    //        //_documentSession.Store(snapshot);
+    //    }
 
-        public T GetLatestSnapshot<T>(string streamName) where T : class
-        {
-            //var latestSnapshot = _documentSession.Query<SnapshotWrapper>()
-            //                .Customize(x => x.WaitForNonStaleResultsAsOfNow())
-            //                .Where(x => x.StreamName == streamName)
-            //                .OrderByDescending(x => x.Created)
-            //                .FirstOrDefault();
+    //    public T GetLatestSnapshot<T>(string streamName) where T : class
+    //    {
+    //        //var latestSnapshot = _documentSession.Query<SnapshotWrapper>()
+    //        //                .Customize(x => x.WaitForNonStaleResultsAsOfNow())
+    //        //                .Where(x => x.StreamName == streamName)
+    //        //                .OrderByDescending(x => x.Created)
+    //        //                .FirstOrDefault();
 
-            //if (latestSnapshot == null)
-            //{
-            //    return null;
-            //}
-            //else
-            //{
-            //    return (T)latestSnapshot.Snapshot;
-            //}
+    //        //if (latestSnapshot == null)
+    //        //{
+    //        //    return null;
+    //        //}
+    //        //else
+    //        //{
+    //        //    return (T)latestSnapshot.Snapshot;
+    //        //}
 
-            return null;
-        }
+    //        return null;
+    //    }
 
-        private static void CheckForConcurrencyError(int? expectedVersion, EventStream stream)
-        {
-            var lastUpdatedVersion = stream.Version;
-            if (lastUpdatedVersion != expectedVersion)
-            {
-                var error = $"Expected: {expectedVersion}. Found: {lastUpdatedVersion}";
-                throw new OptimsticConcurrencyException(error);
-            }
-        }
-    }
+    //    private static void CheckForConcurrencyError(int? expectedVersion, EventStream stream)
+    //    {
+    //        var lastUpdatedVersion = stream.Version;
+    //        if (lastUpdatedVersion != expectedVersion)
+    //        {
+    //            var error = $"Expected: {expectedVersion}. Found: {lastUpdatedVersion}";
+    //            throw new OptimsticConcurrencyException(error);
+    //        }
+    //    }
+    //}
 }

@@ -1,4 +1,6 @@
-﻿namespace Simple.Common
+﻿using System;
+
+namespace Simple.Common
 {
     public class EventStream
     {
@@ -6,20 +8,23 @@
         {
         }
 
-        public EventStream(string id)
+        public EventStream(Guid id, string type)
         {
             Id = id;
+            Type = type;
             Version = 0;
         }
 
-        public string Id { get; } //aggregate type + id
+        public Guid Id { get; }
+
+        public string Type { get; }
+
         public int Version { get; private set; }
 
         public EventWrapper RegisterEvent(DomainEvent @event)
         {
             Version++;
-
-            return new EventWrapper(@event, Version, Id);
+            return new EventWrapper(@event, Version, Id, Type);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Simple.Infrastructure.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof (EventStore).Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof (MsSqlEventStore).Assembly).AsImplementedInterfaces();
         }
     }
 }
