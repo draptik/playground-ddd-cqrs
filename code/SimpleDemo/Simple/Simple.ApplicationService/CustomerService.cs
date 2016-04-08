@@ -12,24 +12,28 @@ namespace Simple.ApplicationService
     public class CustomerService : ICustomerService
     {
         private readonly IBusControl _bus;
+        private readonly Uri serviceAddress;
 
         public CustomerService(IBusControl bus)
         {
-            _bus = bus;
+            this._bus = bus;
+
+            var useInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
+            this.serviceAddress = useInMemoryBus
+                ? new Uri(ConfigurationManager.AppSettings["ServiceAddressInMemory"])
+                : new Uri(ConfigurationManager.AppSettings["ServiceAddress"]);
         }
 
         public async Task<CreateCustomerResponse> CreateCustomer(Customer customer)
         {
-            var client = CreateRequestClient();
+            var client = this.CreateRequestClient();
             var response = await client.Request(new CreateCustomerRequest(Guid.NewGuid(), customer.Name, customer.Address));
             return response;
         }
 
         private IRequestClient<CreateCustomerRequest, CreateCustomerResponse> CreateRequestClient()
         {
-            var serviceAddress = new Uri(ConfigurationManager.AppSettings["ServiceAddress"]); // TODO Check service address for in-memory usage...
-            var client = _bus.CreateRequestClient<CreateCustomerRequest, CreateCustomerResponse>(serviceAddress,
-                TimeSpan.FromSeconds(10));
+            var client = this._bus.CreateRequestClient<CreateCustomerRequest, CreateCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(10));
             return client;
         }
     }

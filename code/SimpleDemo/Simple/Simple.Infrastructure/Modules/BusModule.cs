@@ -12,36 +12,44 @@ namespace Simple.Infrastructure.Modules
         {
             builder.RegisterType<CreateCustomerConsumer>();
 
-            // RabbitMq implementation
-            builder.Register(context =>
+            var usInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
+
+            if (usInMemoryBus) {
+                builder.Register(ConfigureInMemoryBus)
+                    .SingleInstance()
+                    .As<IBusControl>()
+                    .As<IBus>();
+            }
+            else {
+                builder.Register(ConfigureRabbitMq)
+                    .SingleInstance()
+                    .As<IBusControl>()
+                    .As<IBus>();
+            }
+        }
+
+        private static IBusControl ConfigureInMemoryBus(IComponentContext context)
+        {
+            var busControl = Bus.Factory.CreateUsingInMemory(cfg =>
             {
-                var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
+                cfg.ReceiveEndpoint(ConfigurationManager.AppSettings["Endpoint"], ep => ep.LoadFrom(context));
+            });
+            return busControl;
+        }
+
+        private static IBusControl ConfigureRabbitMq(IComponentContext context)
+        {
+            var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
+            {
+                var host = cfg.Host(new Uri(ConfigurationManager.AppSettings["RabbitMqUri"]), h =>
                 {
-                    var host = cfg.Host(new Uri(ConfigurationManager.AppSettings["RabbitMqUri"]), h =>
-                    {
-                        h.Username(ConfigurationManager.AppSettings["RabbitMqUser"]);
-                        h.Password(ConfigurationManager.AppSettings["RabbitMqPassword"]);
-                    });
-
-                    cfg.ReceiveEndpoint(host, ConfigurationManager.AppSettings["RabbitMqEndpoint"], ec => { ec.LoadFrom(context); });
+                    h.Username(ConfigurationManager.AppSettings["RabbitMqUser"]);
+                    h.Password(ConfigurationManager.AppSettings["RabbitMqPassword"]);
                 });
-                return busControl;
-            })
-                .SingleInstance()
-                .As<IBusControl>()
-                .As<IBus>();
 
-            // In Memory implementation
-            //builder.Register(context =>
-            //{
-            //    var busControl = Bus.Factory.CreateUsingInMemory(cfg =>
-            //    {
-            //        cfg.ReceiveEndpoint("my_queue", ep => ep.LoadFrom(context) );
-            //    });
-            //    return busControl;
-            //}).SingleInstance()
-            //    .As<IBusControl>()
-            //    .As<IBus>();
+                cfg.ReceiveEndpoint(host, ConfigurationManager.AppSettings["Endpoint"], ec => { ec.LoadFrom(context); });
+            });
+            return busControl;
         }
     }
 }
