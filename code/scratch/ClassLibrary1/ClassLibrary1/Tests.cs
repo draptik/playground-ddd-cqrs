@@ -29,6 +29,15 @@ namespace ClassLibrary1
         }
     }
 
+    class DbObject
+    {
+        /// <summary>
+        /// This is the string representation of the 
+        /// </summary>
+        public string Type { get; set; }
+        public string Payload { get; set; } 
+    }
+
     // Just an idea
     public class MyConverter
     {
