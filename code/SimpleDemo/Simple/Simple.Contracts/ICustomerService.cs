@@ -9,5 +9,7 @@ namespace Simple.Contracts
     {
         Task<CreateCustomerResponse> CreateCustomer(Customer customer);
         Task<ChangeCustomerAddressResponse> ChangeCustomerAddress(Guid customerId, string address);
+
+        Task<GetCustomerResponse> GetCustomer(Guid customerId);
     }
 }

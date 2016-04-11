@@ -3,6 +3,7 @@ using System.Web.Http;
 using Simple.CommandStack.ViewModels;
 using Simple.Contracts;
 using Simple.Domain;
+using System;
 
 namespace Simple.Web.Controllers
 {
@@ -26,6 +27,13 @@ namespace Simple.Web.Controllers
         public async Task<IHttpActionResult> ChangeAddress(ChangeCustomerAddressViewModel customer)
         {
             var result = await _service.ChangeCustomerAddress(customer.Id, customer.Address);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> GetCustomer([FromUri] Guid customerId)
+        {
+            var result = await _service.GetCustomer(customerId);
             return Ok(result);
         }
     }

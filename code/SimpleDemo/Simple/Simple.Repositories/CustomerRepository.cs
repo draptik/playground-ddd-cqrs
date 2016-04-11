@@ -2,6 +2,8 @@
 using Simple.Common;
 using Simple.Contracts;
 using Simple.Domain;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Simple.Repositories
 {
@@ -44,6 +46,24 @@ namespace Simple.Repositories
             {
                 return expectedVersion;
             }
+        }
+
+        public Customer FindById(Guid customerId)
+        {
+           var dynamicEvents = _eventStore.GetStream(StreamNameFor(customerId), 0, Int32.MaxValue);
+
+            foreach (var e in dynamicEvents)
+            {
+
+            }
+
+            var customer = new Customer();
+
+            foreach (var @event in dynamicEvents)
+            {
+                customer.Apply(@event);
+            }
+            return customer;
         }
     }
 }

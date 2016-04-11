@@ -37,7 +37,17 @@ namespace Simple.ApplicationService
             var response = await client.Request(new ChangeCustomerAddressRequest(Guid.NewGuid(), customerId, address));
             return response;
         }
-
+        public async Task<GetCustomerResponse> GetCustomer(Guid customerId)
+        {
+            var client = this.CreateGetCustomer();
+            var response = await client.Request(new GetCustomerRequest(Guid.NewGuid(), customerId));
+            return response;
+        }
+        private IRequestClient<GetCustomerRequest, GetCustomerResponse> CreateGetCustomer()
+        {
+            var client = this._bus.CreateRequestClient<GetCustomerRequest, GetCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(10));
+            return client;
+        }
         private IRequestClient<CreateCustomerRequest, CreateCustomerResponse> CreateRequestClient()
         {
             var client = this._bus.CreateRequestClient<CreateCustomerRequest, CreateCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(10));
@@ -51,5 +61,6 @@ namespace Simple.ApplicationService
                     TimeSpan.FromSeconds(10));
             return client;
         }
+       
     }
 }

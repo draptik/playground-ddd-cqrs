@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="ChangeCustomerAddress.cs" />
     <Compile Include="CreateCustomerConsumer.cs" />
+    <Compile Include="GetCustomerConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

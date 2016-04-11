@@ -86,8 +86,10 @@ namespace Simple.Eventstore
                 command.ExecuteNonQuery();
             }
         }
+        //public IEnumerable<EventWrapper> GetStream(string streamName, int fromVersion, int toVersion)
+        public IEnumerable<dynamic> GetStream(string streamName, int fromVersion, int toVersion)
 
-        public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
+        //public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
         {
             var strings = streamName.Split('@');
             var type = strings[0];
@@ -95,8 +97,8 @@ namespace Simple.Eventstore
 
             var sqlConnection = new SqlConnection(_connectionString);
 
-            var domainEvents = new List<DomainEvent>();
-
+            var domainEvents = new List<dynamic>();
+            var eventWrappers = new List<EventWrapper>();
             using (var command = new SqlCommand(Queries.GetEventStream, sqlConnection))
             {
                 command.Parameters.AddWithValue("EventStreamId", id);
@@ -113,19 +115,16 @@ namespace Simple.Eventstore
                         var dbVersion = reader.GetInt32(reader.GetOrdinal("Version"));
                         var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
                         var dbEventStreamId = reader.GetGuid(reader.GetOrdinal("EventStreamId"));
-
-                        
-
-                        
+                        eventWrappers.Add(EventWrapper.Create(dbId,dbType,dbPayload,dbEventStreamId,dbVersion));
                         //domainEvents.Add(evnt);
                     }
                 }
 
                 sqlConnection.Close();
             }
-
+            domainEvents = eventWrappers.Select(x => x.Event2).ToList();
             return domainEvents;
-
+            //return eventWrappers;
         }
 
         public void AddSnapshot<T>(string streamName, T snapshot)
@@ -214,9 +213,9 @@ namespace Simple.Eventstore
         public const string InsertEvents = "INSERT INTO [Events](Id, EventType, Version, Payload, EventStreamId) " + 
             " VALUES (@Id, @EventType, @Version, @Payload, @EventStreamId)";
 
-        public const string GetEventStream = "SELECT TOP 1 [Id], [EventType], [Version], [Payload], [EventStreamId] " + 
+        public const string GetEventStream = "SELECT [Id], [EventType], [Version], [Payload], [EventStreamId] " + 
             " FROM [Events]" +
-            " WHERE [EventStreamId] + @EventStreamId " +
+            " WHERE [EventStreamId] = @EventStreamId " +
             " AND [Version] >= @MinVersion " +
             " AND [Version] <= @MaxVersion " + 
             " ORDER BY [Version]";

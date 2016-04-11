@@ -43,8 +43,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\ChangeCustomerAddressRequest.cs" />
     <Compile Include="Requests\CreateCustomerRequest.cs" />
+    <Compile Include="Requests\GetCustomerRequest.cs" />
     <Compile Include="Responses\ChangeCustomerAddressResponse.cs" />
     <Compile Include="Responses\CreateCustomerResponse.cs" />
+    <Compile Include="Responses\GetCustomerResponse.cs" />
     <Compile Include="ViewModels\ChangeCustomerAddressViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
