@@ -12,9 +12,9 @@ namespace Simple.Infrastructure.Modules
         {
             builder.RegisterType<CreateCustomerConsumer>();
 
-            var usInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
+            var useInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
 
-            if (usInMemoryBus) {
+            if (useInMemoryBus) {
                 builder.Register(ConfigureInMemoryBus)
                     .SingleInstance()
                     .As<IBusControl>()
