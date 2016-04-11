@@ -16,6 +16,13 @@ namespace Simple.Eventstore
             this.Version = 0;
         }
 
+        public EventStream(Guid id, string type, int version)
+        {
+            this.Id = id;
+            this.Type = type;
+            this.Version = version;
+        }
+
         public Guid Id { get; }
 
         public string Type { get; }

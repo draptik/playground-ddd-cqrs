@@ -10,7 +10,7 @@ namespace Simple.Infrastructure.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CreateCustomerConsumer>();
+            builder.RegisterAssemblyTypes(typeof(CreateCustomerConsumer).Assembly).AsImplementedInterfaces();
 
             var useInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
 

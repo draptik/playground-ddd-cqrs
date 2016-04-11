@@ -31,9 +31,24 @@ namespace Simple.ApplicationService
             return response;
         }
 
+        public async Task<ChangeCustomerAddressResponse> ChangeCustomerAddress(Guid customerId, string address)
+        {
+            var client = this.CreateChangeAddressClient();
+            var response = await client.Request(new ChangeCustomerAddressRequest(Guid.NewGuid(), customerId, address));
+            return response;
+        }
+
         private IRequestClient<CreateCustomerRequest, CreateCustomerResponse> CreateRequestClient()
         {
             var client = this._bus.CreateRequestClient<CreateCustomerRequest, CreateCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(10));
+            return client;
+        }
+
+        private IRequestClient<ChangeCustomerAddressRequest, ChangeCustomerAddressResponse> CreateChangeAddressClient()
+        {
+            var client =
+                this._bus.CreateRequestClient<ChangeCustomerAddressRequest, ChangeCustomerAddressResponse>(this.serviceAddress,
+                    TimeSpan.FromSeconds(10));
             return client;
         }
     }
