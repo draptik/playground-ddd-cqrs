@@ -43,7 +43,7 @@ namespace ClassLibrary1
 
                 var customer = new Customer();
                 foreach (var domainEvent in domainEvents) {
-                    customer.Apply(domainEvent);
+                    customer.Apply(domainEvent); // <-------------------- evt
                 }
 
                 customer.Name.Should().Be("Max");
