@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ClassLibrary1.Domain;
+using ClassLibrary1.Events;
 using ClassLibrary1.Framework;
 using FluentAssertions;
 using Xunit;
@@ -8,12 +9,21 @@ namespace ClassLibrary1
 {
     public class Tests
     {
+
         [Fact]
         public void SimpleTest()
         {
             var jsonCreate = "{ \"Name\": \"Max\", \"Address\": \"Berlin\" }";
             var jsonAddressChanged = "{ \"Address\": \"New York\" }";
 
+            var dbObjects = new List<DbObject>
+            {
+                new DbObject {Type = typeof(CustomerCreated).Name, Payload = jsonCreate},
+                new DbObject {Type = typeof(CustomerAddressChanged).Namespace, Payload = jsonAddressChanged}
+            };
+
+            // `dbObjects` is my mock data!!!!!!!!!!
+            // I have to create `domainEvents` from `dbObjects`
             // I want to call convert method which converts to the correct event
 
             // DomainEvent e = MyConverter.Convert(...)
@@ -27,13 +37,17 @@ namespace ClassLibrary1
             customer.Name.Should().Be("Max");
             customer.Address.Should().Be("New York");
         }
+
+        [Fact]
+        public void GetTypeFromString()
+        {
+            var customerCreated = new CustomerCreated();
+        }
+
     }
 
     class DbObject
     {
-        /// <summary>
-        /// This is the string representation of the 
-        /// </summary>
         public string Type { get; set; }
         public string Payload { get; set; } 
     }
