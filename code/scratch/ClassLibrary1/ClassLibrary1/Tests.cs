@@ -37,13 +37,6 @@ namespace ClassLibrary1
             customer.Name.Should().Be("Max");
             customer.Address.Should().Be("New York");
         }
-
-        [Fact]
-        public void GetTypeFromString()
-        {
-            var customerCreated = new CustomerCreated();
-        }
-
     }
 
     class DbObject
