@@ -34,7 +34,9 @@ namespace ClassLibrary1
                 // dbObject has the type as string.
                 //
                 // How do I convert the payload/expando object to the correct type?
-                
+
+                var typeAsString = dbObject.Type; // No idea how to use this
+                DomainEvent evt = MyConverter.Convert<I_Have_No_Idea_Which_Event>(payloadExpando);
 
                 var domainEvents = new List<DomainEvent>();
 
@@ -58,7 +60,7 @@ namespace ClassLibrary1
         // Just an idea
         public static class MyConverter
         {
-            public static T Convert<T>(dynamic source) where T : class, new() // or DomainEvent
+            public static T Convert<T>(dynamic source) where T : DomainEvent, new() // or DomainEvent
             {
                 T t = new T();
                 Update(source, t);
