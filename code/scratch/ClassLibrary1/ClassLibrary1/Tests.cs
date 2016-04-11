@@ -29,7 +29,7 @@ namespace ClassLibrary1
 
             foreach (var dbObject in dbObjects) {
                 var payloadExpando = JsonConvert.DeserializeObject<ExpandoObject>(dbObject.Payload, new ExpandoObjectConverter());
-                // Ok, the payload is an expando-object now
+                // Ok, the payload is an expando-object now...
                 //
                 // dbObject has the type as string.
                 //
