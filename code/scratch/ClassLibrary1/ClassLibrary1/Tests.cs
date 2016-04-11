@@ -1,4 +1,8 @@
-﻿using Xunit;
+﻿using System.Collections.Generic;
+using ClassLibrary1.Domain;
+using ClassLibrary1.Framework;
+using FluentAssertions;
+using Xunit;
 
 namespace ClassLibrary1
 {
@@ -13,6 +17,15 @@ namespace ClassLibrary1
             // I want to call convert method which converts to the correct event
 
             // DomainEvent e = MyConverter.Convert(...)
+            var domainEvents = new List<DomainEvent>();
+
+            var customer = new Customer();
+            foreach (var domainEvent in domainEvents) {
+                customer.Apply(domainEvent);
+            }
+
+            customer.Name.Should().Be("Max");
+            customer.Address.Should().Be("New York");
         }
     }
 

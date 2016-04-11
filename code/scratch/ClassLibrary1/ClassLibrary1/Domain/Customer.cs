@@ -6,7 +6,7 @@ namespace ClassLibrary1.Domain
 {
     public class Customer : AggregateRoot
     {
-        private Customer()
+        public Customer()
         {
         }
 
