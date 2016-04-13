@@ -12,6 +12,8 @@ namespace Simple.Infrastructure.Modules
         {
             builder.RegisterAssemblyTypes(typeof(CreateCustomerConsumer).Assembly).AsImplementedInterfaces();
 
+            
+
             var useInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
 
             if (useInMemoryBus) {
@@ -47,7 +49,10 @@ namespace Simple.Infrastructure.Modules
                     h.Password(ConfigurationManager.AppSettings["RabbitMqPassword"]);
                 });
 
-                cfg.ReceiveEndpoint(host, ConfigurationManager.AppSettings["Endpoint"], ec => { ec.LoadFrom(context); });
+                cfg.ReceiveEndpoint(host, ConfigurationManager.AppSettings["Endpoint"], ec =>
+                {
+                    ec.LoadFrom(context);
+                });
             });
             return busControl;
         }
