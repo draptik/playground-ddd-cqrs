@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using ClassLibrary1.Domain;
 using ClassLibrary1.Events;
@@ -17,38 +18,31 @@ namespace ClassLibrary1
         public void SimpleTest()
         {
             var jsonCreate = "{ \"Name\": \"Max\", \"Address\": \"Berlin\" }";
-            var jsonAddressChanged = "{ \"Address\": \"New York\" }";
+            var jsonAddressChanged = "{ \"Address\": \"Hamburg\" }";
+            var jsonAddressChangedAgain = "{ \"Address\": \"New York\" }";
 
             // this is my EventStore
             var dbObjects = new List<DbObject>
             {
-                new DbObject {Type = typeof (CustomerCreated).Name, Payload = jsonCreate},
-                new DbObject {Type = typeof (CustomerAddressChanged).Namespace, Payload = jsonAddressChanged}
+                new DbObject {Type = typeof (CustomerCreated).AssemblyQualifiedName, Payload = jsonCreate},
+                new DbObject {Type = typeof (CustomerAddressChanged).AssemblyQualifiedName, Payload = jsonAddressChanged},
+                new DbObject {Type = typeof (CustomerAddressChanged).AssemblyQualifiedName, Payload = jsonAddressChangedAgain}
             };
 
-
+            var domainEvents = new List<DomainEvent>();
             foreach (var dbObject in dbObjects) {
-                var payloadExpando = JsonConvert.DeserializeObject<ExpandoObject>(dbObject.Payload, new ExpandoObjectConverter());
-                // Ok, the payload is an expando-object now...
-                //
-                // dbObject has the type as string.
-                //
-                // How do I convert the payload/expando object to the correct type?
-
-                var typeAsString = dbObject.Type; // No idea how to use this
-                DomainEvent evt = MyConverter.Convert<I_Have_No_Idea_Which_Event>(payloadExpando);
-
-                var domainEvents = new List<DomainEvent>();
-
-
-                var customer = new Customer();
-                foreach (var domainEvent in domainEvents) {
-                    customer.Apply(domainEvent); // <-------------------- evt
-                }
-
-                customer.Name.Should().Be("Max");
-                customer.Address.Should().Be("New York");
+                var payload = JsonConvert.DeserializeObject(dbObject.Payload, Type.GetType(dbObject.Type));
+                domainEvents.Add(payload as DomainEvent);
             }
+
+            var customer = new Customer();
+            foreach (var domainEvent in domainEvents)
+            {
+                customer.Apply(domainEvent);
+            }
+
+            customer.Name.Should().Be("Max");
+            customer.Address.Should().Be("New York");
         }
 
         public class DbObject
@@ -58,19 +52,21 @@ namespace ClassLibrary1
         }
 
         // Just an idea
-        public static class MyConverter
-        {
-            public static T Convert<T>(dynamic source) where T : DomainEvent, new() // or DomainEvent
-            {
-                T t = new T();
-                Update(source, t);
-                return t;
-            }
+        //public static class MyConverter
+        //{
+            
 
-            private static void Update<T>(dynamic source, T o) where T : class
-            {
+        //    public static T Convert<T>(dynamic source) where T : class, new() // or DomainEvent
+        //    {
+        //        T t = new T();
+        //        Update(source, t);
+        //        return t;
+        //    }
 
-            }
-        }
+        //    private static void Update<T>(dynamic source, T o) where T : class
+        //    {
+
+        //    }
+        //}
     }
 }
