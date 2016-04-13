@@ -5,11 +5,11 @@ using Simple.Contracts;
 
 namespace Simple.Infrastructure.Consumers
 {
-    public class UpdateReadModelConsumer : IConsumer<ICustomerCreatedEvent>
+    public class UpdateCustomerCondencedReadModelConsumer : IConsumer<ICustomerCreatedEvent>
     {
-        private readonly IUpdateCustomerReadModelRepository _repository;
+        private readonly IUpdateCustomerCondencedRepository _repository;
 
-        public UpdateReadModelConsumer(IUpdateCustomerReadModelRepository repository)
+        public UpdateCustomerCondencedReadModelConsumer(IUpdateCustomerCondencedRepository repository)
         {
             _repository = repository;
         }

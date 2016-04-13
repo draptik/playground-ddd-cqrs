@@ -4,27 +4,26 @@ using Simple.Contracts;
 
 namespace Simple.Readmodels
 {
-    public class UpdateCustomerReadModelRepository : IUpdateCustomerReadModelRepository
+    public class UpdateCustomerCondecedReadModelRepository : IUpdateCustomerCondencedRepository
     {
         private readonly CustomerContext _context;
 
-        public UpdateCustomerReadModelRepository()
+        public UpdateCustomerCondecedReadModelRepository()
         {
             _context = new CustomerContext();
         }
 
         public void Update(ICustomerCreatedEvent command)
         {
-            var customer = _context.Customers.SingleOrDefault(x => x.Id.Equals(command.Id));
+            var customer = _context.CustomerForLists.SingleOrDefault(x => x.Id.Equals(command.Id));
 
             if (customer != null)
             {
                 customer.Name = command.Name;
-                customer.Address = command.Address;
             }
             else
             {
-                _context.Customers.Add(new Customer { Id = command.Id, Name = command.Name, Address = command.Address });
+                _context.CustomerForLists.Add(new CustomerForList { Id = command.Id, Name = command.Name });
             }
 
             _context.SaveChanges();

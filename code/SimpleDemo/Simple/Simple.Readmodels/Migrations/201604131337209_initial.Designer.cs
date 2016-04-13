@@ -7,13 +7,13 @@ namespace Simple.Readmodels.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialMigrationa : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigrationa));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201604131229126_Initial-Migrationa"; }
+            get { return "201604131337209_initial"; }
         }
         
         string IMigrationMetadata.Source

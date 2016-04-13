@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
-namespace Simple.CommandStack.Commands
+namespace Simple.CommandStack.Events
 {
-    public class UpdateViewModelCommand : IUpdateViewModelCommand
+    public class CustomerCreatedEvent : ICustomerCreatedEvent
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

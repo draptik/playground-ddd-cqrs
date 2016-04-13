@@ -51,22 +51,19 @@
   <ItemGroup>
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerContext.cs" />
-    <Compile Include="Migrations\201604131229126_Initial-Migrationa.cs" />
-    <Compile Include="Migrations\201604131229126_Initial-Migrationa.Designer.cs">
-      <DependentUpon>201604131229126_Initial-Migrationa.cs</DependentUpon>
+    <Compile Include="CustomerForList.cs" />
+    <Compile Include="Migrations\201604131337209_initial.cs" />
+    <Compile Include="Migrations\201604131337209_initial.Designer.cs">
+      <DependentUpon>201604131337209_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateCustomerCondecedReadModelRepository.cs" />
     <Compile Include="UpdateCustomerReadModelRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604131229126_Initial-Migrationa.resx">
-      <DependentUpon>201604131229126_Initial-Migrationa.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simple.CommandStack\Simple.CommandStack.csproj">
@@ -77,6 +74,11 @@
       <Project>{A7403218-CD01-4B06-B3B7-15A26D195994}</Project>
       <Name>Simple.Contracts</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604131337209_initial.resx">
+      <DependentUpon>201604131337209_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

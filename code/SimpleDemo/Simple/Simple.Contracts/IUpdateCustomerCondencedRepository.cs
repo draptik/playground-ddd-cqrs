@@ -2,7 +2,7 @@
 
 namespace Simple.Contracts
 {
-    public interface IUpdateCustomerReadModelRepository
+    public interface IUpdateCustomerCondencedRepository
     {
         void Update(ICustomerCreatedEvent command);
     }

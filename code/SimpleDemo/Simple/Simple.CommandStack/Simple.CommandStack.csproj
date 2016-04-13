@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\IUpdateViewModelCommand.cs" />
-    <Compile Include="Commands\UpdateViewModelCommand.cs" />
+    <Compile Include="Events\CustomerCreatedEvent.cs" />
+    <Compile Include="Events\ICustomerCreatedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\ChangeCustomerAddressRequest.cs" />
     <Compile Include="Requests\CreateCustomerRequest.cs" />
@@ -64,6 +64,9 @@
       <Project>{4C737428-DDAD-4284-82DB-E74FC17861D6}</Project>
       <Name>Simple.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

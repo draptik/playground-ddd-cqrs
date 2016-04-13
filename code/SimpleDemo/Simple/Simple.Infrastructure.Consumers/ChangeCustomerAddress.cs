@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MassTransit;
-using Simple.CommandStack.Commands;
+using Simple.CommandStack.Events;
 using Simple.CommandStack.Requests;
 using Simple.CommandStack.Responses;
 using Simple.Contracts;
@@ -25,12 +25,12 @@ namespace Simple.Infrastructure.Consumers
                 var customer = Convert(context.Message);
                 _repository.Save(customer);
 
-                await context.Publish<IUpdateViewModelCommand>(new UpdateViewModelCommand
-                {
-                    Id = customer.Id,
-                    Name = customer.Name,
-                    Address = customer.Address
-                });
+                //await context.Publish<ICustomerCreatedEvent>(new CustomerCreatedEvent
+                //{
+                //    Id = customer.Id,
+                //    Name = customer.Name,
+                //    Address = customer.Address
+                //});
 
                 await context.RespondAsync(new ChangeCustomerAddressResponse
                 {

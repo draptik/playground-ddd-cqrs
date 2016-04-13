@@ -9,5 +9,6 @@ namespace Simple.Readmodels
         }
 
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerForList> CustomerForLists { get; set; }
     }
 }

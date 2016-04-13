@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Simple.CommandStack.Commands
+namespace Simple.CommandStack.Events
 {
-    public interface IUpdateViewModelCommand
+    public interface ICustomerCreatedEvent
     {
         Guid Id { get; set; } 
         string Name { get; set; } 

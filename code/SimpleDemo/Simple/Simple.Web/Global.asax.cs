@@ -13,11 +13,5 @@ namespace Simple.Web
             GlobalConfiguration.Configure(WebApiConfig.Register);
             IoCBuilder.InitWeb(Assembly.GetExecutingAssembly(), GlobalConfiguration.Configuration);
         }
-
-        public override void Dispose()
-        {
-            IoCBuilder.StopBus();
-            base.Dispose();
-        }
     }
 }
