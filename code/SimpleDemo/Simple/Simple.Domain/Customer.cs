@@ -36,14 +36,14 @@ namespace Simple.Domain
 
         private void When(CustomerCreated customerCreated)
         {
-            this.Id = customerCreated.Id;
+            this.Id = customerCreated.AggregateId;
             this.Name = customerCreated.Name;
             this.Address = customerCreated.Address;
         }
 
         private void When(CustomerAddressChanged customerAddressChanged)
         {
-            this.Id = customerAddressChanged.Id;
+            this.Id = customerAddressChanged.AggregateId;
             this.Address = customerAddressChanged.Address;
         }
     }

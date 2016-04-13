@@ -6,9 +6,9 @@ namespace Simple.Common
     {
         public DomainEvent(Guid aggregateId)
         {
-            Id = aggregateId;
+            AggregateId = aggregateId;
         }
 
-        public Guid Id { get; }
+        public Guid AggregateId { get; }
     }
 }
