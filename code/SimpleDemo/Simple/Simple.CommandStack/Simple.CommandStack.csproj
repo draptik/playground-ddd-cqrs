@@ -54,6 +54,10 @@
       <Project>{1A7E18BB-C925-4041-8E4E-5AD0B8B6D9DB}</Project>
       <Name>Simple.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simple.Domain\Simple.Domain.csproj">
+      <Project>{4C737428-DDAD-4284-82DB-E74FC17861D6}</Project>
+      <Name>Simple.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

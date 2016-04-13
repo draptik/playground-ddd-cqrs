@@ -45,7 +45,7 @@ namespace Simple.ApplicationService
         }
         private IRequestClient<GetCustomerRequest, GetCustomerResponse> CreateGetCustomer()
         {
-            var client = this._bus.CreateRequestClient<GetCustomerRequest, GetCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(10));
+            var client = this._bus.CreateRequestClient<GetCustomerRequest, GetCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(30));
             return client;
         }
         private IRequestClient<CreateCustomerRequest, CreateCustomerResponse> CreateRequestClient()

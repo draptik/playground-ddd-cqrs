@@ -27,8 +27,6 @@ namespace Simple.Eventstore
             try
             {
                 AddEventStream(eventStream, transaction);
-                //AddEvents(domainEvents.Select(@event => eventStream.RegisterEvent(@event)).ToList(), transaction);
-
                 transaction.Commit();
             }
             catch (Exception exc)
@@ -86,19 +84,16 @@ namespace Simple.Eventstore
                 command.ExecuteNonQuery();
             }
         }
-        //public IEnumerable<EventWrapper> GetStream(string streamName, int fromVersion, int toVersion)
-        public IEnumerable<dynamic> GetStream(string streamName, int fromVersion, int toVersion)
 
-        //public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
+        public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
         {
             var strings = streamName.Split('@');
-            var type = strings[0];
+            //var type = strings[0];
             var id = strings[1];
 
             var sqlConnection = new SqlConnection(_connectionString);
 
-            var domainEvents = new List<dynamic>();
-            var eventWrappers = new List<EventWrapper>();
+            var domainEvents = new List<DomainEvent>();
             using (var command = new SqlCommand(Queries.GetEventStream, sqlConnection))
             {
                 command.Parameters.AddWithValue("EventStreamId", id);
@@ -115,16 +110,14 @@ namespace Simple.Eventstore
                         var dbVersion = reader.GetInt32(reader.GetOrdinal("Version"));
                         var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
                         var dbEventStreamId = reader.GetGuid(reader.GetOrdinal("EventStreamId"));
-                        eventWrappers.Add(EventWrapper.Create(dbId,dbType,dbPayload,dbEventStreamId,dbVersion));
-                        //domainEvents.Add(evnt);
+                        var payload = JsonConvert.DeserializeObject(dbPayload, Type.GetType(dbType));
+                        domainEvents.Add(payload as DomainEvent);
                     }
                 }
-
                 sqlConnection.Close();
             }
-            domainEvents = eventWrappers.Select(x => x.Event2).ToList();
+
             return domainEvents;
-            //return eventWrappers;
         }
 
         public void AddSnapshot<T>(string streamName, T snapshot)

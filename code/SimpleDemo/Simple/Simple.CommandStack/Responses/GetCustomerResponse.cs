@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Simple.Domain;
 
 namespace Simple.CommandStack.Responses
 {
@@ -10,5 +7,6 @@ namespace Simple.CommandStack.Responses
     {
         public Guid ResponseId { get; set; }
         public string Message { get; set; }
+        public Customer Customer { get; set; }
     }
 }

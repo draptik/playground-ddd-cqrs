@@ -1,9 +1,8 @@
 ﻿using System;
+using Simple.CommandStack.Responses;
 using Simple.Common;
 using Simple.Contracts;
 using Simple.Domain;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace Simple.Repositories
 {
@@ -30,6 +29,19 @@ namespace Simple.Repositories
             _eventStore.AppendEventsToStream(streamName, customer.Changes, null);
         }
 
+        public GetCustomerResponse FindById(Guid customerId)
+        {
+            var domainEvents = _eventStore.GetStream(StreamNameFor(customerId), 0, int.MaxValue);
+
+            var customer = new Customer();
+
+            foreach (var @event in domainEvents)
+            {
+                customer.Apply(@event);
+            }
+            return new GetCustomerResponse { Customer = customer, ResponseId = customerId, Message = "ok"};
+        }
+
         private string StreamNameFor(Guid id)
         {
             return $"{typeof (Customer).Name}@{id}";
@@ -42,28 +54,7 @@ namespace Simple.Repositories
                 // first time the aggregate is stored, there is no expected version
                 return null;
             }
-            else
-            {
-                return expectedVersion;
-            }
-        }
-
-        public Customer FindById(Guid customerId)
-        {
-           var dynamicEvents = _eventStore.GetStream(StreamNameFor(customerId), 0, Int32.MaxValue);
-
-            foreach (var e in dynamicEvents)
-            {
-
-            }
-
-            var customer = new Customer();
-
-            foreach (var @event in dynamicEvents)
-            {
-                customer.Apply(@event);
-            }
-            return customer;
+            return expectedVersion;
         }
     }
 }

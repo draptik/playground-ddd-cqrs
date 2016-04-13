@@ -30,7 +30,7 @@ namespace Simple.Eventstore
         public EventWrapper(DomainEvent @event, int eventNumber, Guid streamStateId)
         {
             this.Event = @event;
-            this.Type = @event.GetType().ToString();
+            this.Type = @event.GetType().AssemblyQualifiedName;
             this.EventNumber = eventNumber;
             this.EventStreamId = streamStateId;
             this.Id = Guid.NewGuid();
