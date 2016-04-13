@@ -44,10 +44,14 @@
     <Compile Include="Requests\ChangeCustomerAddressRequest.cs" />
     <Compile Include="Requests\CreateCustomerRequest.cs" />
     <Compile Include="Requests\GetCustomerRequest.cs" />
+    <Compile Include="Requests\IChangeCustomerAddressRequest.cs" />
+    <Compile Include="Requests\ICreateCustomerRequest.cs" />
+    <Compile Include="Requests\IGetCustomerRequest.cs" />
     <Compile Include="Responses\ChangeCustomerAddressResponse.cs" />
     <Compile Include="Responses\CreateCustomerResponse.cs" />
     <Compile Include="Responses\GetCustomerResponse.cs" />
     <Compile Include="ViewModels\ChangeCustomerAddressViewModel.cs" />
+    <Compile Include="ViewModels\CreateCustomerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simple.Common\Simple.Common.csproj">

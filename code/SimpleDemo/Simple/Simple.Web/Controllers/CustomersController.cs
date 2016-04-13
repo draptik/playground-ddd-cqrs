@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Simple.CommandStack.ViewModels;
 using Simple.Contracts;
-using Simple.Domain;
-using System;
 
 namespace Simple.Web.Controllers
 {
@@ -17,7 +16,7 @@ namespace Simple.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> CreateCustomer(Customer customer)
+        public async Task<IHttpActionResult> CreateCustomer(CreateCustomerViewModel customer)
         {
             var result = await _service.CreateCustomer(customer);
             return Ok(result);

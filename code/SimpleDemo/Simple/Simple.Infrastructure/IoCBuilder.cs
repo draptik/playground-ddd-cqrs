@@ -38,5 +38,11 @@ namespace Simple.Infrastructure
             var webApiResolver = new AutofacWebApiDependencyResolver(_container);
             configuration.DependencyResolver = webApiResolver;
         }
+
+        public static void StopBus()
+        {
+            var busControl = _container.Resolve<IBusControl>();
+            busControl.Stop();
+        }
     }
 }

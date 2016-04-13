@@ -8,7 +8,7 @@ using Simple.Domain;
 
 namespace Simple.Infrastructure.Consumers
 {
-    public class CreateCustomerConsumer : IConsumer<CreateCustomerRequest>
+    public class CreateCustomerConsumer : IConsumer<ICreateCustomerRequest>
     {
         private readonly ICustomerRepository _repository;
 
@@ -17,14 +17,15 @@ namespace Simple.Infrastructure.Consumers
             this._repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<CreateCustomerRequest> context)
+        public async Task Consume(ConsumeContext<ICreateCustomerRequest> context)
         {
             try {
-                this._repository.Add(this.Convert(context.Message));
+                var customer = this.Convert(context.Message);
+                this._repository.Add(customer);
 
                 await context.RespondAsync(new CreateCustomerResponse
                 {
-                    ResponseId = context.Message.Id,
+                    ResponseId = customer.Id,
                     Message = "OK"
                 });
             }
@@ -38,8 +39,9 @@ namespace Simple.Infrastructure.Consumers
             }
         }
 
-        private Customer Convert(CreateCustomerRequest createCustomerRequest)
+        private Customer Convert(ICreateCustomerRequest createCustomerRequest)
         {
+            // Ctor created new Guid (derived from Entity)
             return new Customer(createCustomerRequest.Name, createCustomerRequest.Address);
         }
     }

@@ -105,13 +105,18 @@ namespace Simple.Eventstore
                 {
                     while (reader.Read())
                     {
-                        var dbId = reader.GetGuid(reader.GetOrdinal("Id"));
+                        //var dbId = reader.GetGuid(reader.GetOrdinal("Id"));
                         var dbType = reader.GetString(reader.GetOrdinal("EventType"));
                         var dbVersion = reader.GetInt32(reader.GetOrdinal("Version"));
                         var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
-                        var dbEventStreamId = reader.GetGuid(reader.GetOrdinal("EventStreamId"));
+                        //var dbEventStreamId = reader.GetGuid(reader.GetOrdinal("EventStreamId"));
                         var payload = JsonConvert.DeserializeObject(dbPayload, Type.GetType(dbType));
-                        domainEvents.Add(payload as DomainEvent);
+                        var domainEvent = payload as DomainEvent;
+                        if (domainEvent != null)
+                        {
+                            domainEvent.Version = dbVersion;
+                            domainEvents.Add(domainEvent);
+                        }
                     }
                 }
                 sqlConnection.Close();

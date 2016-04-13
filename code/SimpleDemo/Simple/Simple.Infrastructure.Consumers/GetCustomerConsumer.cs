@@ -7,7 +7,7 @@ using Simple.Contracts;
 
 namespace Simple.Infrastructure.Consumers
 {
-    public class GetCustomerConsumer : IConsumer<GetCustomerRequest>
+    public class GetCustomerConsumer : IConsumer<IGetCustomerRequest>
     {
         private readonly ICustomerRepository _repository;
 
@@ -16,7 +16,7 @@ namespace Simple.Infrastructure.Consumers
             _repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<GetCustomerRequest> context)
+        public async Task Consume(ConsumeContext<IGetCustomerRequest> context)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace Simple.Infrastructure.Consumers
                 await
                     context.RespondAsync(new GetCustomerResponse
                     {
-                        ResponseId = context.Message.Id,
+                        ResponseId = context.Message.CustomerId,
                         Message = "Failed" + Environment.NewLine + exc.Message
                     });
                 throw;

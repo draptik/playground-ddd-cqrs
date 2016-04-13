@@ -45,6 +45,7 @@ namespace Simple.Domain
         {
             this.Id = customerAddressChanged.AggregateId;
             this.Address = customerAddressChanged.Address;
+            this.Version = customerAddressChanged.Version;
         }
     }
 }

@@ -8,7 +8,7 @@ using Simple.Domain;
 
 namespace Simple.Infrastructure.Consumers
 {
-    public class ChangeCustomerAddress : IConsumer<ChangeCustomerAddressRequest>
+    public class ChangeCustomerAddress : IConsumer<IChangeCustomerAddressRequest>
     {
         private readonly ICustomerRepository _repository;
 
@@ -17,15 +17,15 @@ namespace Simple.Infrastructure.Consumers
             _repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<ChangeCustomerAddressRequest> context)
+        public async Task Consume(ConsumeContext<IChangeCustomerAddressRequest> context)
         {
             try
             {
                 _repository.Save(Convert(context.Message));
 
-                await context.RespondAsync(new ChangeCustomerAddressResponse()
+                await context.RespondAsync(new ChangeCustomerAddressResponse
                 {
-                    ResponseId = context.Message.Id,
+                    ResponseId = context.Message.CustomerId,
                     Message = "OK"
                 });
             }
@@ -34,15 +34,14 @@ namespace Simple.Infrastructure.Consumers
                 await
                     context.RespondAsync(new ChangeCustomerAddressResponse
                     {
-                        ResponseId = context.Message.Id,
+                        ResponseId = context.Message.CustomerId,
                         Message = "Failed" + Environment.NewLine + exc.Message
                     });
             }
         }
 
-        private Customer Convert(ChangeCustomerAddressRequest request)
+        private Customer Convert(IChangeCustomerAddressRequest request)
         {
-            // Maybe use a separate DTO (instead of 'Customer')?
             return new Customer(request.CustomerId, request.Address);
         }
     }

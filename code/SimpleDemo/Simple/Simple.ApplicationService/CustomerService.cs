@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using Simple.CommandStack.Requests;
 using Simple.CommandStack.Responses;
+using Simple.CommandStack.ViewModels;
 using Simple.Contracts;
 using Simple.Domain;
 
@@ -24,10 +25,12 @@ namespace Simple.ApplicationService
                 : new Uri(ConfigurationManager.AppSettings["ServiceAddress"]);
         }
 
-        public async Task<CreateCustomerResponse> CreateCustomer(Customer customer)
+        public async Task<CreateCustomerResponse> CreateCustomer(CreateCustomerViewModel customer)
         {
             var client = this.CreateRequestClient();
-            var response = await client.Request(new CreateCustomerRequest(Guid.NewGuid(), customer.Name, customer.Address));
+            
+            var createCustomerRequest = new CreateCustomerRequest(Guid.NewGuid(), customer.Name, customer.Address);
+            var response = await client.Request(createCustomerRequest);
             return response;
         }
 
@@ -43,21 +46,23 @@ namespace Simple.ApplicationService
             var response = await client.Request(new GetCustomerRequest(Guid.NewGuid(), customerId));
             return response;
         }
-        private IRequestClient<GetCustomerRequest, GetCustomerResponse> CreateGetCustomer()
+
+        private IRequestClient<IGetCustomerRequest, GetCustomerResponse> CreateGetCustomer()
         {
-            var client = this._bus.CreateRequestClient<GetCustomerRequest, GetCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(30));
-            return client;
-        }
-        private IRequestClient<CreateCustomerRequest, CreateCustomerResponse> CreateRequestClient()
-        {
-            var client = this._bus.CreateRequestClient<CreateCustomerRequest, CreateCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(10));
+            var client = this._bus.CreateRequestClient<IGetCustomerRequest, GetCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(30));
             return client;
         }
 
-        private IRequestClient<ChangeCustomerAddressRequest, ChangeCustomerAddressResponse> CreateChangeAddressClient()
+        private IRequestClient<ICreateCustomerRequest, CreateCustomerResponse> CreateRequestClient()
+        {
+            var client = this._bus.CreateRequestClient<ICreateCustomerRequest, CreateCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(10));
+            return client;
+        }
+
+        private IRequestClient<IChangeCustomerAddressRequest, ChangeCustomerAddressResponse> CreateChangeAddressClient()
         {
             var client =
-                this._bus.CreateRequestClient<ChangeCustomerAddressRequest, ChangeCustomerAddressResponse>(this.serviceAddress,
+                this._bus.CreateRequestClient<IChangeCustomerAddressRequest, ChangeCustomerAddressResponse>(this.serviceAddress,
                     TimeSpan.FromSeconds(10));
             return client;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Simple.Common;
 using Simple.Contracts;
 using Simple.Domain;
@@ -33,11 +34,12 @@ namespace Simple.Repositories
             var domainEvents = _eventStore.GetStream(StreamNameFor(customerId), 0, int.MaxValue);
 
             var customer = new Customer();
-
-            foreach (var @event in domainEvents)
+            
+            foreach (var @event in domainEvents.OrderBy(x => x.Version))
             {
                 customer.Apply(@event);
             }
+
             return customer;
         }
 

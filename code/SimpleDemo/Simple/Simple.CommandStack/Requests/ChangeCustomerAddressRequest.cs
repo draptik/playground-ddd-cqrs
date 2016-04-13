@@ -3,8 +3,9 @@ using Simple.Common;
 
 namespace Simple.CommandStack.Requests
 {
-    public class ChangeCustomerAddressRequest : EventSourcedAggregate
+    public class ChangeCustomerAddressRequest : IChangeCustomerAddressRequest
     {
+        public Guid Id { get; }
         public Guid CustomerId { get; }
 
         public string Address { get; }
@@ -17,11 +18,6 @@ namespace Simple.CommandStack.Requests
             Timestamp = DateTime.UtcNow;
             CustomerId = customerId;
             Address = address;
-        }
-
-        public override void Apply(DomainEvent changes)
-        {
-            // nothing to do
         }
     }
 }

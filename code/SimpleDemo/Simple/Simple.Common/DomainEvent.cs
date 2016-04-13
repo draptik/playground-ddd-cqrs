@@ -10,5 +10,7 @@ namespace Simple.Common
         }
 
         public Guid AggregateId { get; }
+
+        public int Version { get; set; }
     }
 }

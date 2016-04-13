@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Simple.Common
 {
@@ -9,6 +10,7 @@ namespace Simple.Common
             Changes = new List<DomainEvent>();
         }
 
+        [JsonIgnore]
         public List<DomainEvent> Changes { get; }
 
         public int Version { get; protected set; }
