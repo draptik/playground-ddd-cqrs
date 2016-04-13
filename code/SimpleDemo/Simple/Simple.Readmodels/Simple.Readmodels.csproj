@@ -58,7 +58,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdateCustomerCondecedReadModelRepository.cs" />
+    <Compile Include="UpdateCustomerCondensedReadModelRepository.cs" />
     <Compile Include="UpdateCustomerReadModelRepository.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -43,7 +43,7 @@
     <Compile Include="IUpdateCustomerReadModelRepository.cs" />
     <Compile Include="ICustomerRepository.cs" />
     <Compile Include="ICustomerService.cs" />
-    <Compile Include="IUpdateCustomerCondencedRepository.cs" />
+    <Compile Include="IUpdateCustomerCondensedRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

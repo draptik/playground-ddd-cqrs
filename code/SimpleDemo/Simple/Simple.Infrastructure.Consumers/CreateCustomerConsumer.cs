@@ -26,7 +26,7 @@ namespace Simple.Infrastructure.Consumers
                 var customer = this.Convert(context.Message);
                 this._repository.Add(customer);
 
-                //await _bus.Publish<ICustomerCreatedEvent>(new CustomerCreatedEvent
+                //await context.Publish<ICustomerCreatedEvent>(new CustomerCreatedEvent
                 //{
                 //    Id = customer.Id,
                 //    Name = customer.Name,

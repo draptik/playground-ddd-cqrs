@@ -119,7 +119,7 @@
       <Name>Simple.Infrastructure.Consumers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simple.Readmodels\Simple.Readmodels.csproj">
-      <Project>{54BDCCF9-3729-42DC-91C9-65D422FD4595}</Project>
+      <Project>{54bdccf9-3729-42dc-91c9-65d422fd4595}</Project>
       <Name>Simple.Readmodels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simple.Repositories\Simple.Repositories.csproj">

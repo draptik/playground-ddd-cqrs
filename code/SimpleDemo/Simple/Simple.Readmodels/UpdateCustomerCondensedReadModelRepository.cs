@@ -4,11 +4,11 @@ using Simple.Contracts;
 
 namespace Simple.Readmodels
 {
-    public class UpdateCustomerCondecedReadModelRepository : IUpdateCustomerCondencedRepository
+    public class UpdateCustomerCondensedReadModelRepository : IUpdateCustomerCondensedRepository
     {
         private readonly CustomerContext _context;
 
-        public UpdateCustomerCondecedReadModelRepository()
+        public UpdateCustomerCondensedReadModelRepository()
         {
             _context = new CustomerContext();
         }
