@@ -201,7 +201,7 @@ namespace Simple.Eventstore
 
         public const string GetEventStreamMeta = "SELECT TOP 1 [Id], [Type], [Version] " +
             " FROM [EventStreams] " +
-            " WHERE [Id] = @AggregateId";
+            " WHERE [Id] = @Id";
 
         public const string InsertEvents = "INSERT INTO [Events](Id, EventType, Version, Payload, EventStreamId) " + 
             " VALUES (@Id, @EventType, @Version, @Payload, @EventStreamId)";
@@ -215,6 +215,6 @@ namespace Simple.Eventstore
 
         public const string UpdateVersionInEventStream = "UPDATE [EventStreams] " +
                                                          " SET [Version] = @Version " +
-                                                         " WHERE [Id] = @AggregateId";
+                                                         " WHERE [Id] = @Id";
     }
 }
