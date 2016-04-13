@@ -8,6 +8,6 @@ namespace Simple.Contracts
     {
         void Add(Customer customer);
         void Save(Customer customer);
-        GetCustomerResponse FindById(Guid customerId);
+        Customer FindById(Guid customerId);
     }
 }

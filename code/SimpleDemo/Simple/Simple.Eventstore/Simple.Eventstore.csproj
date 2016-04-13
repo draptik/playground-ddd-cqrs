@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventStore.cs" />
     <Compile Include="EventStream.cs" />
     <Compile Include="EventWrapper.cs" />
     <Compile Include="MsSqlEventStore.cs" />

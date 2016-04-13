@@ -29,7 +29,7 @@ namespace Simple.Repositories
             _eventStore.AppendEventsToStream(streamName, customer.Changes, null);
         }
 
-        public GetCustomerResponse FindById(Guid customerId)
+        public Customer FindById(Guid customerId)
         {
             var domainEvents = _eventStore.GetStream(StreamNameFor(customerId), 0, int.MaxValue);
 
@@ -39,7 +39,7 @@ namespace Simple.Repositories
             {
                 customer.Apply(@event);
             }
-            return new GetCustomerResponse { Customer = customer, ResponseId = customerId, Message = "ok"};
+            return customer;
         }
 
         private string StreamNameFor(Guid id)
