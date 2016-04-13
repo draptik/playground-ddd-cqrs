@@ -27,6 +27,7 @@ namespace Simple.Infrastructure
             builder.RegisterModule<ServiceModule>();
             builder.RegisterModule<BusModule>();
             builder.RegisterModule<RepositoryModule>();
+            builder.RegisterModule<ReadModelModule>();
 
             _container = builder.Build();
 

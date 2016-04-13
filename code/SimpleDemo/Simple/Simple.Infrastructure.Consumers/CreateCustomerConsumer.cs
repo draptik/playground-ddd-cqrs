@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MassTransit;
+using Simple.CommandStack.Commands;
 using Simple.CommandStack.Requests;
 using Simple.CommandStack.Responses;
 using Simple.Contracts;
@@ -22,6 +23,13 @@ namespace Simple.Infrastructure.Consumers
             try {
                 var customer = this.Convert(context.Message);
                 this._repository.Add(customer);
+
+                await context.Publish<IUpdateViewModelCommand>(new UpdateViewModelCommand
+                {
+                    Id = customer.Id,
+                    Name = customer.Name,
+                    Address = customer.Address
+                });
 
                 await context.RespondAsync(new CreateCustomerResponse
                 {

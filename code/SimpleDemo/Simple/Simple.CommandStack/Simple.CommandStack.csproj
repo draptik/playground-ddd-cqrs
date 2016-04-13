@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\IUpdateViewModelCommand.cs" />
+    <Compile Include="Commands\UpdateViewModelCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\ChangeCustomerAddressRequest.cs" />
     <Compile Include="Requests\CreateCustomerRequest.cs" />

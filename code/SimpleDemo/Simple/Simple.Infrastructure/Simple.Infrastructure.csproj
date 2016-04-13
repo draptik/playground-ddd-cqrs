@@ -88,6 +88,7 @@
     <Compile Include="IoCBuilder.cs" />
     <Compile Include="Modules\BusModule.cs" />
     <Compile Include="Modules\EventStoreModule.cs" />
+    <Compile Include="Modules\ReadModelModule.cs" />
     <Compile Include="Modules\RepositoryModule.cs" />
     <Compile Include="Modules\ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,6 +117,10 @@
     <ProjectReference Include="..\Simple.Infrastructure.Consumers\Simple.Infrastructure.Consumers.csproj">
       <Project>{18DD007F-4267-4A7A-A77C-30098BD3E2B3}</Project>
       <Name>Simple.Infrastructure.Consumers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Readmodels\Simple.Readmodels.csproj">
+      <Project>{54BDCCF9-3729-42DC-91C9-65D422FD4595}</Project>
+      <Name>Simple.Readmodels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simple.Repositories\Simple.Repositories.csproj">
       <Project>{B7D30178-217E-458C-B18C-2E8501555461}</Project>
