@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[EventStreams]
 CREATE TABLE [dbo].[Events]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
-    [EventType] NVARCHAR(50) NOT NULL, 
+    [EventType] NVARCHAR(255) NOT NULL, 
     [Version] INT NOT NULL, 
     [Payload] NVARCHAR(MAX) NOT NULL, 
     [EventStreamId] UNIQUEIDENTIFIER NOT NULL, 
