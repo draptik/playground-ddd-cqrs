@@ -97,7 +97,6 @@
       <DependentUpon>SimpleEventStore.mdf</DependentUpon>
     </Content>
     <Content Include="packages.config" />
-    <Content Include="README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
