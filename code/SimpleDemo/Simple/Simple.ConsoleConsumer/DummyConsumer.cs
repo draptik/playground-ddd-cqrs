@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MassTransit;
 using Simple.CommandStack.Requests;
+using Simple.Messages;
 
 namespace Simple.ConsoleConsumer
 {

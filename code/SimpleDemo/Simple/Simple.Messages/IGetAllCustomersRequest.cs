@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Simple.Domain.QueryModels;
 
-namespace Simple.CommandStack.Requests
+namespace Simple.Messages
 {
     public interface IGetAllCustomersRequest
     {

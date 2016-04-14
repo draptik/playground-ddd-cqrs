@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Readmodels", "Simple
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.ConsoleConsumer", "Simple.ConsoleConsumer\Simple.ConsoleConsumer.csproj", "{E5DD54B2-4FD2-4A64-92BD-D20C5F461C22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Messages", "Simple.Messages\Simple.Messages.csproj", "{CC435B04-3B52-4907-9742-7B477FDC7925}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{E5DD54B2-4FD2-4A64-92BD-D20C5F461C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5DD54B2-4FD2-4A64-92BD-D20C5F461C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5DD54B2-4FD2-4A64-92BD-D20C5F461C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC435B04-3B52-4907-9742-7B477FDC7925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC435B04-3B52-4907-9742-7B477FDC7925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC435B04-3B52-4907-9742-7B477FDC7925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC435B04-3B52-4907-9742-7B477FDC7925}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

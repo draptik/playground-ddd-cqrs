@@ -6,6 +6,7 @@ using Simple.CommandStack.Requests;
 using Simple.CommandStack.Responses;
 using Simple.Contracts;
 using Simple.Domain;
+using Simple.Messages;
 
 namespace Simple.Infrastructure.Consumers.EventStoreHandlers
 {

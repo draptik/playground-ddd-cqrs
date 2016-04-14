@@ -49,10 +49,6 @@
     <Compile Include="Requests\CreateCustomerRequest.cs" />
     <Compile Include="Requests\GetAllCustomersRequest.cs" />
     <Compile Include="Requests\GetCustomerRequest.cs" />
-    <Compile Include="Requests\IChangeCustomerAddressRequest.cs" />
-    <Compile Include="Requests\ICreateCustomerRequest.cs" />
-    <Compile Include="Requests\IGetAllCustomersRequest.cs" />
-    <Compile Include="Requests\IGetCustomerRequest.cs" />
     <Compile Include="Responses\ChangeCustomerAddressResponse.cs" />
     <Compile Include="Responses\CreateCustomerResponse.cs" />
     <Compile Include="Responses\GetAllCustomersResponse.cs" />
@@ -68,6 +64,10 @@
     <ProjectReference Include="..\Simple.Domain\Simple.Domain.csproj">
       <Project>{4C737428-DDAD-4284-82DB-E74FC17861D6}</Project>
       <Name>Simple.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Messages\Simple.Messages.csproj">
+      <Project>{CC435B04-3B52-4907-9742-7B477FDC7925}</Project>
+      <Name>Simple.Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

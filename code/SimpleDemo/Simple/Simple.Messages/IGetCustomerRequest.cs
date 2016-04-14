@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Simple.CommandStack.Requests
+namespace Simple.Messages
 {
     public interface IGetCustomerRequest
     {

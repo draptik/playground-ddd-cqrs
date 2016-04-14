@@ -80,6 +80,10 @@
       <Project>{4C737428-DDAD-4284-82DB-E74FC17861D6}</Project>
       <Name>Simple.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simple.Messages\Simple.Messages.csproj">
+      <Project>{CC435B04-3B52-4907-9742-7B477FDC7925}</Project>
+      <Name>Simple.Messages</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

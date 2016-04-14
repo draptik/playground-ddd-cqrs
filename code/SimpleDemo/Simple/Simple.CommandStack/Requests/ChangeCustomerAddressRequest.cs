@@ -1,5 +1,6 @@
 ﻿using System;
 using Simple.Common;
+using Simple.Messages;
 
 namespace Simple.CommandStack.Requests
 {

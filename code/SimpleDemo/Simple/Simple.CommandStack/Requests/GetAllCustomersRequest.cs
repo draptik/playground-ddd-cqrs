@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Simple.Domain.QueryModels;
+using Simple.Messages;
 
 namespace Simple.CommandStack.Requests
 {

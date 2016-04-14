@@ -7,6 +7,7 @@ using Simple.CommandStack.Responses;
 using Simple.CommandStack.ViewModels;
 using Simple.Contracts;
 using Simple.Domain;
+using Simple.Messages;
 
 namespace Simple.ApplicationService
 {
