@@ -7,7 +7,7 @@ using Simple.CommandStack.Responses;
 using Simple.Contracts;
 using Simple.Domain;
 
-namespace Simple.Infrastructure.Consumers
+namespace Simple.Infrastructure.Consumers.EventStoreHandlers
 {
     public class ChangeCustomerAddress : IConsumer<IChangeCustomerAddressRequest>
     {
@@ -25,12 +25,11 @@ namespace Simple.Infrastructure.Consumers
                 var customer = Convert(context.Message);
                 _repository.Save(customer);
 
-                //await context.Publish<ICustomerCreatedEvent>(new CustomerCreatedEvent
-                //{
-                //    Id = customer.Id,
-                //    Name = customer.Name,
-                //    Address = customer.Address
-                //});
+                await context.Publish<ICustomerAddressChangedEvent>(new CustomerAddressChangedEvent
+                {
+                    Id = customer.Id,
+                    Address = customer.Address
+                });
 
                 await context.RespondAsync(new ChangeCustomerAddressResponse
                 {

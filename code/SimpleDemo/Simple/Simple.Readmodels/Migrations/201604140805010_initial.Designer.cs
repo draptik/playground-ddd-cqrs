@@ -13,7 +13,7 @@ namespace Simple.Readmodels.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201604131337209_initial"; }
+            get { return "201604140805010_initial"; }
         }
         
         string IMigrationMetadata.Source

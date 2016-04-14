@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Simple.Domain.QueryModels;
 
 namespace Simple.Readmodels
 {
@@ -8,7 +9,7 @@ namespace Simple.Readmodels
         {
         }
 
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerDetails> CustomerDetails { get; set; }
         public DbSet<CustomerForList> CustomerForLists { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using Simple.CommandStack.Responses;
 using Simple.Contracts;
 using Simple.Domain;
 
-namespace Simple.Infrastructure.Consumers
+namespace Simple.Infrastructure.Consumers.EventStoreHandlers
 {
     /// <summary>
     ///     "You should not be using IBus in a consumer -- if you need to publish events, ConsumeContext implements

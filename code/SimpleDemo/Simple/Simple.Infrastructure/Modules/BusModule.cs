@@ -3,6 +3,8 @@ using System.Configuration;
 using Autofac;
 using MassTransit;
 using Simple.Infrastructure.Consumers;
+using Simple.Infrastructure.Consumers.EventStoreHandlers;
+using Simple.Infrastructure.Consumers.ReadModelHandlers;
 
 namespace Simple.Infrastructure.Modules
 {
@@ -73,6 +75,8 @@ namespace Simple.Infrastructure.Modules
                     ec.Consumer<CreateCustomerConsumer>(context.Resolve<ILifetimeScope>());
                     ec.Consumer<ChangeCustomerAddress>(context.Resolve<ILifetimeScope>());
                     ec.Consumer<GetCustomerConsumer>(context.Resolve<ILifetimeScope>());
+                    ec.Consumer<UpdateReadModelAfterAddressChanged>(context.Resolve<ILifetimeScope>());
+                    ec.Consumer<GetAllCustomersConsumer>(context.Resolve<ILifetimeScope>());
                 });
             });
             return busControl;

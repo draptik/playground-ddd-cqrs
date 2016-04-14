@@ -1,19 +1,19 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using MassTransit;
 using Simple.CommandStack.Requests;
 using Simple.CommandStack.Responses;
 using Simple.Contracts;
 
-namespace Simple.Infrastructure.Consumers
+namespace Simple.Infrastructure.Consumers.ReadModelHandlers
 {
     public class GetCustomerConsumer : IConsumer<IGetCustomerRequest>
     {
-        private readonly ICustomerRepository _repository;
+        private readonly ICustomerReadModel _readModel;
 
-        public GetCustomerConsumer(ICustomerRepository repository)
+        public GetCustomerConsumer(ICustomerReadModel readModel)
         {
-            _repository = repository;
+            _readModel = readModel;
         }
 
         public async Task Consume(ConsumeContext<IGetCustomerRequest> context)
@@ -22,7 +22,7 @@ namespace Simple.Infrastructure.Consumers
             {
                 await context.RespondAsync(new GetCustomerResponse
                 {
-                    Customer = _repository.FindById(context.Message.CustomerId),
+                    Customer = _readModel.FindById(context.Message.CustomerId),
                     Message = "ok",
                     ResponseId = context.Message.CustomerId
                 });

@@ -3,7 +3,7 @@ using MassTransit;
 using Simple.CommandStack.Events;
 using Simple.Contracts;
 
-namespace Simple.Infrastructure.Consumers
+namespace Simple.Infrastructure.Consumers.ReadModelHandlers
 {
     public class UpdateCustomerCondensedReadModelConsumer : IConsumer<ICustomerCreatedEvent>
     {

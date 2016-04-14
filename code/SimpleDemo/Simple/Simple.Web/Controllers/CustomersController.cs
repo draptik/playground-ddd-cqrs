@@ -35,5 +35,12 @@ namespace Simple.Web.Controllers
             var result = await _service.GetCustomer(customerId);
             return Ok(result);
         }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllCustomers()
+        {
+            var result = await _service.GetAllCustomers();
+            return Ok(result);
+        }
     }
 }

@@ -8,16 +8,7 @@ namespace Simple.Readmodels.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.CustomerForLists",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        Name = c.String(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Customers",
+                "dbo.CustomerDetails",
                 c => new
                     {
                         Id = c.Guid(nullable: false),
@@ -26,12 +17,21 @@ namespace Simple.Readmodels.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
+            CreateTable(
+                "dbo.CustomerForLists",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
         {
-            DropTable("dbo.Customers");
             DropTable("dbo.CustomerForLists");
+            DropTable("dbo.CustomerDetails");
         }
     }
 }

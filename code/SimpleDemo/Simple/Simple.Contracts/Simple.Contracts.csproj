@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUpdateCustomerReadModelRepository.cs" />
+    <Compile Include="ICustomerReadModel.cs" />
     <Compile Include="ICustomerRepository.cs" />
     <Compile Include="ICustomerService.cs" />
     <Compile Include="IUpdateCustomerCondensedRepository.cs" />

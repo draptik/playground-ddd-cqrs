@@ -40,17 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\CustomerAddressChangedEvent.cs" />
     <Compile Include="Events\CustomerCreatedEvent.cs" />
+    <Compile Include="Events\ICustomerAddressChangedEvent.cs" />
     <Compile Include="Events\ICustomerCreatedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\ChangeCustomerAddressRequest.cs" />
     <Compile Include="Requests\CreateCustomerRequest.cs" />
+    <Compile Include="Requests\GetAllCustomersRequest.cs" />
     <Compile Include="Requests\GetCustomerRequest.cs" />
     <Compile Include="Requests\IChangeCustomerAddressRequest.cs" />
     <Compile Include="Requests\ICreateCustomerRequest.cs" />
+    <Compile Include="Requests\IGetAllCustomersRequest.cs" />
     <Compile Include="Requests\IGetCustomerRequest.cs" />
     <Compile Include="Responses\ChangeCustomerAddressResponse.cs" />
     <Compile Include="Responses\CreateCustomerResponse.cs" />
+    <Compile Include="Responses\GetAllCustomersResponse.cs" />
     <Compile Include="Responses\GetCustomerResponse.cs" />
     <Compile Include="ViewModels\ChangeCustomerAddressViewModel.cs" />
     <Compile Include="ViewModels\CreateCustomerViewModel.cs" />

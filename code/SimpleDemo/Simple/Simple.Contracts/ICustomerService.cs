@@ -12,5 +12,6 @@ namespace Simple.Contracts
         Task<ChangeCustomerAddressResponse> ChangeCustomerAddress(Guid customerId, string address);
 
         Task<GetCustomerResponse> GetCustomer(Guid customerId);
+        Task<GetAllCustomersResponse> GetAllCustomers();
     }
 }

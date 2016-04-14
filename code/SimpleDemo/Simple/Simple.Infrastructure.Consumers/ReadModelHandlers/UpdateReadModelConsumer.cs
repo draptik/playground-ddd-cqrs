@@ -3,20 +3,20 @@ using MassTransit;
 using Simple.CommandStack.Events;
 using Simple.Contracts;
 
-namespace Simple.Infrastructure.Consumers
+namespace Simple.Infrastructure.Consumers.ReadModelHandlers
 {
     public class UpdateReadModelConsumer : IConsumer<ICustomerCreatedEvent>
     {
-        private readonly IUpdateCustomerReadModelRepository _repository;
+        private readonly ICustomerReadModel _readModel;
 
-        public UpdateReadModelConsumer(IUpdateCustomerReadModelRepository repository)
+        public UpdateReadModelConsumer(ICustomerReadModel readModel)
         {
-            _repository = repository;
+            _readModel = readModel;
         }
 
         public Task Consume(ConsumeContext<ICustomerCreatedEvent> context)
         {
-            _repository.Update(context.Message);
+            _readModel.Update(context.Message);
             return Task.FromResult(0);
         }
     }

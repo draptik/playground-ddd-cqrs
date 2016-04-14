@@ -1,5 +1,6 @@
 ﻿using System;
 using Simple.Domain;
+using Simple.Domain.QueryModels;
 
 namespace Simple.CommandStack.Responses
 {
@@ -7,6 +8,6 @@ namespace Simple.CommandStack.Responses
     {
         public Guid ResponseId { get; set; }
         public string Message { get; set; }
-        public Customer Customer { get; set; }
+        public CustomerDetails Customer { get; set; }
     }
 }

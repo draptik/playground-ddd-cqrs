@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Simple.CommandStack.Events;
 using Simple.Contracts;
+using Simple.Domain.QueryModels;
 
 namespace Simple.Readmodels
 {
