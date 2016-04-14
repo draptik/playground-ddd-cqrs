@@ -19,6 +19,7 @@ namespace Simple.ConsoleConsumer
 
                 cfg.ReceiveEndpoint(host, "simple_customer_service_console_queue", ec =>
                 {
+                    ec.Bind("simple_customer_service_queue");
                     ec.Consumer<DummyConsumer>();
                 });
             });
