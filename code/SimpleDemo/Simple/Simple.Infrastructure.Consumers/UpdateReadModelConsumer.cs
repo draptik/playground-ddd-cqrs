@@ -17,9 +17,7 @@ namespace Simple.Infrastructure.Consumers
         public Task Consume(ConsumeContext<ICustomerCreatedEvent> context)
         {
             _repository.Update(context.Message);
-
-            // TODO Do we have to return anything here??
-            return null;
+            return Task.FromResult(0);
         }
     }
 }

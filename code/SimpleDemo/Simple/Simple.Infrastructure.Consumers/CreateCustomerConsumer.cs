@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MassTransit;
+using Simple.CommandStack.Events;
 using Simple.CommandStack.Requests;
 using Simple.CommandStack.Responses;
 using Simple.Contracts;
@@ -33,13 +34,13 @@ namespace Simple.Infrastructure.Consumers
                 var customer = this.Convert(context.Message);
                 this._repository.Add(customer);
 
-                
-                //await context.Publish<ICustomerCreatedEvent>(new CustomerCreatedEvent
-                //{
-                //    Id = customer.Id,
-                //    Name = customer.Name,
-                //    Address = customer.Address
-                //});
+
+                await context.Publish<ICustomerCreatedEvent>(new CustomerCreatedEvent
+                {
+                    Id = customer.Id,
+                    Name = customer.Name,
+                    Address = customer.Address
+                });
 
                 await context.RespondAsync(new CreateCustomerResponse
                 {
