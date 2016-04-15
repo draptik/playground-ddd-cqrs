@@ -25,9 +25,8 @@ namespace Simple.Repositories
         public void Save(Customer customer)
         {
             var streamName = StreamNameFor(customer.Id);
-            // TODO Implement once snapshots are available
-            //var expectedVersion = GetExpectedVersion(customer.InitialVersion);
-            _eventStore.AppendEventsToStream(streamName, customer.Changes, null);
+            var expectedVersion = GetExpectedVersion(customer.InitialVersion);
+            _eventStore.AppendEventsToStream(streamName, customer.Changes, expectedVersion);
         }
 
         public Customer FindById(Guid customerId)

@@ -11,6 +11,7 @@ namespace Simple.Domain
 
         public Customer(CustomerSnapshot snapshot)
         {
+            this.InitialVersion = snapshot.Version;
             Version = snapshot.Version;
             Name = snapshot.Name;
             Address = snapshot.Address;
@@ -26,6 +27,8 @@ namespace Simple.Domain
         {
             this.Causes(new CustomerAddressChanged(aggregateId, address));
         }
+
+        public int InitialVersion { get; } = 0;
 
         public string Name { get; set; }
         public string Address { get; set; }

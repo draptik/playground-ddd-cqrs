@@ -5,12 +5,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using Newtonsoft.Json;
 using Simple.Common;
+using Simple.Common.Exceptions;
 
 namespace Simple.Eventstore
 {
     public class MsSqlEventStore : IEventStore
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["SimpleEventStore"].ConnectionString;
+        private readonly string _connectionString =
+            ConfigurationManager.ConnectionStrings["SimpleEventStore"].ConnectionString;
 
         public void CreateNewStream(string streamName, IEnumerable<DomainEvent> domainEvents)
         {
@@ -50,6 +52,11 @@ namespace Simple.Eventstore
 
             var eventStream = GetEventStreamMeta(new Guid(id));
 
+            if (expectedVersion != null)
+            {
+                CheckForConcurrencyError(expectedVersion, eventStream);
+            }
+
             var sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
 
@@ -72,19 +79,6 @@ namespace Simple.Eventstore
             }
         }
 
-        private void UpdateStream(EventStream eventStream, SqlTransaction transaction)
-        {
-            using (var command = new SqlCommand(Queries.UpdateVersionInEventStream, transaction.Connection))
-            {
-                command.Transaction = transaction;
-
-                command.Parameters.AddWithValue("Id", eventStream.Id);
-                command.Parameters.AddWithValue("Version", eventStream.Version);
-
-                command.ExecuteNonQuery();
-            }
-        }
-
         public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
         {
             var strings = streamName.Split('@');
@@ -101,7 +95,7 @@ namespace Simple.Eventstore
                 command.Parameters.AddWithValue("MaxVersion", toVersion);
                 sqlConnection.Open();
 
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -168,7 +162,6 @@ namespace Simple.Eventstore
             {
                 sqlConnection.Close();
             }
-
         }
 
         /// <typeparam name="T">Snapshot object (i.e. CustomerSnapshot)</typeparam>
@@ -179,18 +172,18 @@ namespace Simple.Eventstore
             var eventStreamId = streamName.Split('@')[1];
 
             var sqlConnection = new SqlConnection(_connectionString);
-            
+
             using (var command = new SqlCommand(Queries.GetLatestSnapshot, sqlConnection))
             {
                 command.Parameters.AddWithValue("EventStreamId", eventStreamId);
                 sqlConnection.Open();
 
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
-                        result = (T) JsonConvert.DeserializeObject(dbPayload, typeof(T));
+                        result = (T) JsonConvert.DeserializeObject(dbPayload, typeof (T));
                     }
                 }
             }
@@ -206,7 +199,7 @@ namespace Simple.Eventstore
             using (var command = new SqlCommand(Queries.GetAllEventStreamIds, sqlConnection))
             {
                 sqlConnection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -217,6 +210,29 @@ namespace Simple.Eventstore
             }
 
             return result;
+        }
+
+        private static void CheckForConcurrencyError(int? expectedVersion, EventStream stream)
+        {
+            var lastUpdatedVersion = stream.Version;
+            if (lastUpdatedVersion != expectedVersion)
+            {
+                var error = $"Expected: {expectedVersion}. Found: {lastUpdatedVersion}";
+                throw new OptimsticConcurrencyException(error);
+            }
+        }
+
+        private void UpdateStream(EventStream eventStream, SqlTransaction transaction)
+        {
+            using (var command = new SqlCommand(Queries.UpdateVersionInEventStream, transaction.Connection))
+            {
+                command.Transaction = transaction;
+
+                command.Parameters.AddWithValue("Id", eventStream.Id);
+                command.Parameters.AddWithValue("Version", eventStream.Version);
+
+                command.ExecuteNonQuery();
+            }
         }
 
 
@@ -265,7 +281,7 @@ namespace Simple.Eventstore
                 command.Parameters.AddWithValue("Id", eventStreamId);
                 sqlConnection.Open();
 
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
