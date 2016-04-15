@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Simple.Common;
 using Simple.Contracts;
@@ -41,6 +42,25 @@ namespace Simple.Repositories
             }
 
             return customer;
+        }
+
+        public IEnumerable<Guid> GetAllIds()
+        {
+            return _eventStore.GetAllStreamIds();
+        }
+
+        public void SaveSnapshot(CustomerSnapshot snapshot, Customer customer)
+        {
+            var previousSnapshot = GetLatestSnapshot(customer.Id);
+            if (previousSnapshot == null || previousSnapshot.Version < snapshot.Version)
+            {
+                _eventStore.AddSnapshot(StreamNameFor(customer.Id), snapshot);
+            }
+        }
+
+        public CustomerSnapshot GetLatestSnapshot(Guid customerId)
+        {
+            return _eventStore.GetLatestSnapshot<CustomerSnapshot>(StreamNameFor(customerId));
         }
 
         private string StreamNameFor(Guid id)

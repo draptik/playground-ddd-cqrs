@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Simple.CommandStack.ViewModels;
 using Simple.Contracts;
+using Simple.SnapshotJob;
 
 namespace Simple.Web.Controllers
 {
@@ -10,9 +11,12 @@ namespace Simple.Web.Controllers
     {
         private readonly ICustomerService _service;
 
-        public CustomersController(ICustomerService service)
+        public CustomersController(ICustomerService service, ICustomerSnapshotJob snapshotJob)
         {
             _service = service;
+
+            // TODO this is a temporary location for the snapshot job
+            //snapshotJob.Run();
         }
 
         [HttpPost]

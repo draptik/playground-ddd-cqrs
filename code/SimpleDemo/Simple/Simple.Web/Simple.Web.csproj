@@ -139,6 +139,10 @@
       <Project>{7690AE18-D473-4D53-968C-5E2EB7136327}</Project>
       <Name>Simple.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simple.SnapshotJob\Simple.SnapshotJob.csproj">
+      <Project>{8277879C-BF72-44C1-8001-4CDB78301C11}</Project>
+      <Name>Simple.SnapshotJob</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

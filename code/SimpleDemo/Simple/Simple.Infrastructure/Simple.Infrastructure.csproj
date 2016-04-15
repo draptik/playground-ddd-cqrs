@@ -91,6 +91,7 @@
     <Compile Include="Modules\ReadModelModule.cs" />
     <Compile Include="Modules\RepositoryModule.cs" />
     <Compile Include="Modules\ServiceModule.cs" />
+    <Compile Include="Modules\SnapshotModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +126,10 @@
     <ProjectReference Include="..\Simple.Repositories\Simple.Repositories.csproj">
       <Project>{B7D30178-217E-458C-B18C-2E8501555461}</Project>
       <Name>Simple.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.SnapshotJob\Simple.SnapshotJob.csproj">
+      <Project>{8277879C-BF72-44C1-8001-4CDB78301C11}</Project>
+      <Name>Simple.SnapshotJob</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

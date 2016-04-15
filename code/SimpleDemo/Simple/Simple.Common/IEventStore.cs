@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Simple.Common
 {
@@ -13,5 +14,7 @@ namespace Simple.Common
         void AddSnapshot<T>(string streamName, T snapshot);
 
         T GetLatestSnapshot<T>(string streamName) where T : class;
+
+        IEnumerable<Guid> GetAllStreamIds();
     }
 }

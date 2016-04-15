@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.ConsoleConsumer", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Messages", "Simple.Messages\Simple.Messages.csproj", "{CC435B04-3B52-4907-9742-7B477FDC7925}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.SnapshotJob", "Simple.SnapshotJob\Simple.SnapshotJob.csproj", "{8277879C-BF72-44C1-8001-4CDB78301C11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{CC435B04-3B52-4907-9742-7B477FDC7925}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC435B04-3B52-4907-9742-7B477FDC7925}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC435B04-3B52-4907-9742-7B477FDC7925}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8277879C-BF72-44C1-8001-4CDB78301C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8277879C-BF72-44C1-8001-4CDB78301C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8277879C-BF72-44C1-8001-4CDB78301C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8277879C-BF72-44C1-8001-4CDB78301C11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,6 +9,12 @@ namespace Simple.Domain
         {
         }
 
+        public Customer(CustomerSnapshot snapshot)
+        {
+            Version = snapshot.Version;
+            Name = snapshot.Name;
+            Address = snapshot.Address;
+        }
 
         public Customer(string name, string address)
         {
@@ -22,6 +28,12 @@ namespace Simple.Domain
 
         public string Name { get; set; }
         public string Address { get; set; }
+
+        public CustomerSnapshot GetCustomerSnapshot()
+        {
+            return new CustomerSnapshot { Version = Version, Name = Name, Address = Address };
+        }
+
 
         private void Causes(DomainEvent @event)
         {
@@ -47,5 +59,12 @@ namespace Simple.Domain
             this.Address = customerAddressChanged.Address;
             this.Version = customerAddressChanged.Version;
         }
+    }
+
+    public class CustomerSnapshot
+    {
+        public int Version { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
     }
 }

@@ -16,3 +16,12 @@ CREATE TABLE [dbo].[Events]
     [TimeStampUtc] DATETIME2 NOT NULL,
     CONSTRAINT [FK_EventStreamId] FOREIGN KEY ([EventStreamId]) REFERENCES [EventStreams]([Id])
 )
+
+CREATE TABLE [dbo].[Snapshots]
+(
+    [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    [EventStreamId] UNIQUEIDENTIFIER NOT NULL,
+    [Payload] NVARCHAR(MAX) NOT NULL,
+    [CreatedUtc] DATETIME2 NOT NULL,
+    CONSTRAINT [FK_Snapshot_EventStreamId] FOREIGN KEY ([EventStreamId]) REFERENCES [EventStreams]([Id])
+)

@@ -109,6 +109,7 @@ namespace Simple.Eventstore
                         var dbType = reader.GetString(reader.GetOrdinal("EventType"));
                         var dbVersion = reader.GetInt32(reader.GetOrdinal("Version"));
                         var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
+                        //var dbTimestampUtc = reader.GetDateTime(reader.GetOrdinal("TimestampUtc"));
                         //var dbEventStreamId = reader.GetGuid(reader.GetOrdinal("EventStreamId"));
                         var payload = JsonConvert.DeserializeObject(dbPayload, Type.GetType(dbType));
                         var domainEvent = payload as DomainEvent;
@@ -127,12 +128,93 @@ namespace Simple.Eventstore
 
         public void AddSnapshot<T>(string streamName, T snapshot)
         {
-            throw new System.NotImplementedException();
+            var eventStreamId = streamName.Split('@')[1];
+
+            var wrapper = new SnapshotWrapper
+            {
+                StreamName = eventStreamId,
+                Snapshot = snapshot,
+                Created = DateTime.UtcNow
+            };
+
+            var sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            var transaction = sqlConnection.BeginTransaction();
+            try
+            {
+                using (var command = new SqlCommand(Queries.InsertSnapshot, transaction.Connection))
+                {
+                    command.Transaction = transaction;
+
+                    command.Parameters.AddWithValue("Id", wrapper.Id);
+                    command.Parameters.AddWithValue("EventStreamId", wrapper.StreamName);
+                    command.Parameters.AddWithValue("Payload", JsonConvert.SerializeObject(wrapper.Snapshot));
+                    command.Parameters.AddWithValue("CreatedUtc", wrapper.Created);
+
+                    command.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception exc)
+            {
+                transaction.Rollback();
+                throw;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
         }
 
+        /// <typeparam name="T">Snapshot object (i.e. CustomerSnapshot)</typeparam>
         public T GetLatestSnapshot<T>(string streamName) where T : class
         {
-            throw new System.NotImplementedException();
+            T result = null;
+
+            var eventStreamId = streamName.Split('@')[1];
+
+            var sqlConnection = new SqlConnection(_connectionString);
+            
+            using (var command = new SqlCommand(Queries.GetLatestSnapshot, sqlConnection))
+            {
+                command.Parameters.AddWithValue("EventStreamId", eventStreamId);
+                sqlConnection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
+                        result = (T) JsonConvert.DeserializeObject(dbPayload, typeof(T));
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public IEnumerable<Guid> GetAllStreamIds()
+        {
+            var result = new List<Guid>();
+
+            var sqlConnection = new SqlConnection(_connectionString);
+            using (var command = new SqlCommand(Queries.GetAllEventStreamIds, sqlConnection))
+            {
+                sqlConnection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var dbId = reader.GetGuid(reader.GetOrdinal("Id"));
+                        result.Add(dbId);
+                    }
+                }
+            }
+
+            return result;
         }
 
 
@@ -203,24 +285,35 @@ namespace Simple.Eventstore
     public static class Queries
     {
         public const string InsertNewEventStream = "INSERT INTO [EventStreams](Id, Type, Version) " +
-            " VALUES (@Id, @Type, @Version)";
+                                                   " VALUES (@Id, @Type, @Version)";
 
         public const string GetEventStreamMeta = "SELECT TOP 1 [Id], [Type], [Version] " +
-            " FROM [EventStreams] " +
-            " WHERE [Id] = @Id";
+                                                 " FROM [EventStreams] " +
+                                                 " WHERE [Id] = @Id";
 
-        public const string InsertEvents = "INSERT INTO [Events](Id, EventType, Version, Payload, EventStreamId, TimeStampUtc) " +
-            " VALUES (@Id, @EventType, @Version, @Payload, @EventStreamId, @TimeStampUtc)";
+        public const string InsertEvents = "INSERT INTO [Events]" +
+                                           "(Id, EventType, Version, Payload, EventStreamId, TimeStampUtc) " +
+                                           " VALUES (@Id, @EventType, @Version, @Payload, @EventStreamId, @TimeStampUtc)";
 
-        public const string GetEventStream = "SELECT [Id], [EventType], [Version], [Payload], [EventStreamId] " + 
+        public const string GetEventStream =
+            "SELECT [Id], [EventType], [Version], [Payload], [EventStreamId], [TimestampUtc] " +
             " FROM [Events]" +
             " WHERE [EventStreamId] = @EventStreamId " +
             " AND [Version] >= @MinVersion " +
-            " AND [Version] <= @MaxVersion " + 
+            " AND [Version] <= @MaxVersion " +
             " ORDER BY [Version]";
+
+        public const string GetAllEventStreamIds = "SELECT [Id] FROM [EventStreams]";
 
         public const string UpdateVersionInEventStream = "UPDATE [EventStreams] " +
                                                          " SET [Version] = @Version " +
                                                          " WHERE [Id] = @Id";
+
+        public const string InsertSnapshot = "INSERT INTO [Snapshots](Id, EventStreamId, Payload, CreatedUtc) " +
+                                             " VALUES (@Id, @EventStreamId, @Payload, @CreatedUtc)";
+
+        public const string GetLatestSnapshot = "SELECT TOP(1) * FROM [Snapshots] " +
+                                                " WHERE [EventStreamId] = @EventStreamId " +
+                                                " ORDER BY [CreatedUtc] DESC";
     }
 }
