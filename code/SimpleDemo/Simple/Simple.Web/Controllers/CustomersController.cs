@@ -15,8 +15,12 @@ namespace Simple.Web.Controllers
         {
             _service = service;
 
+
             // TODO this is a temporary location for the snapshot job
-            //snapshotJob.Run();
+            Task.Run(() =>
+            {
+                snapshotJob.Run();
+            });
         }
 
         [HttpPost]
