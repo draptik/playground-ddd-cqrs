@@ -2,7 +2,6 @@
 using System.Configuration;
 using Autofac;
 using MassTransit;
-using Simple.Infrastructure.Consumers;
 using Simple.Infrastructure.Consumers.EventStoreHandlers;
 using Simple.Infrastructure.Consumers.ReadModelHandlers;
 

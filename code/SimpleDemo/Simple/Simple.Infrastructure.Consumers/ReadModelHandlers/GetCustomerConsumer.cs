@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using MassTransit;
-using Simple.CommandStack.Requests;
 using Simple.CommandStack.Responses;
 using Simple.Contracts;
 using Simple.Messages;
