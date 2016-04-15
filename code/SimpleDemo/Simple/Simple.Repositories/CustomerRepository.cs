@@ -32,9 +32,22 @@ namespace Simple.Repositories
 
         public Customer FindById(Guid customerId)
         {
-            var domainEvents = _eventStore.GetStream(StreamNameFor(customerId), 0, int.MaxValue);
+            var fromEventNumber = 0;
+            const int toEventNumber = int.MaxValue;
 
-            var customer = new Customer();
+            var snapshot = _eventStore.GetLatestSnapshot<CustomerSnapshot>(StreamNameFor(customerId));
+            if (snapshot != null)
+            {
+                fromEventNumber = snapshot.Version + 1; // load only events after snapshot
+            }
+
+            var domainEvents = _eventStore.GetStream(StreamNameFor(customerId), fromEventNumber, toEventNumber);
+
+            Customer customer = null;
+
+            customer = snapshot != null 
+                ? new Customer(snapshot) 
+                : new Customer();
             
             foreach (var @event in domainEvents.OrderBy(x => x.Version))
             {

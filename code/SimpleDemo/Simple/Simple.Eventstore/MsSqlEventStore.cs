@@ -96,7 +96,7 @@ namespace Simple.Eventstore
             var domainEvents = new List<DomainEvent>();
             using (var command = new SqlCommand(Queries.GetEventStream, sqlConnection))
             {
-                command.Parameters.AddWithValue("EventStreamId", id);
+                command.Parameters.AddWithValue("EventStreamId", new Guid(id));
                 command.Parameters.AddWithValue("MinVersion", fromVersion);
                 command.Parameters.AddWithValue("MaxVersion", toVersion);
                 sqlConnection.Open();
@@ -137,6 +137,8 @@ namespace Simple.Eventstore
                 Created = DateTime.UtcNow
             };
 
+            var eventStreamGuid = new Guid(wrapper.StreamName);
+
             var sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
 
@@ -148,7 +150,7 @@ namespace Simple.Eventstore
                     command.Transaction = transaction;
 
                     command.Parameters.AddWithValue("Id", wrapper.Id);
-                    command.Parameters.AddWithValue("EventStreamId", wrapper.StreamName);
+                    command.Parameters.AddWithValue("EventStreamId", eventStreamGuid);
                     command.Parameters.AddWithValue("Payload", JsonConvert.SerializeObject(wrapper.Snapshot));
                     command.Parameters.AddWithValue("CreatedUtc", wrapper.Created);
 

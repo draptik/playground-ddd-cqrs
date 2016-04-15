@@ -14,6 +14,7 @@ namespace Simple.Domain
             Version = snapshot.Version;
             Name = snapshot.Name;
             Address = snapshot.Address;
+            this.Id = snapshot.Id;
         }
 
         public Customer(string name, string address)
@@ -31,7 +32,13 @@ namespace Simple.Domain
 
         public CustomerSnapshot GetCustomerSnapshot()
         {
-            return new CustomerSnapshot { Version = Version, Name = Name, Address = Address };
+            return new CustomerSnapshot
+            {
+                Id = Id,
+                Version = Version,
+                Name = Name,
+                Address = Address
+            };
         }
 
 
@@ -66,5 +73,6 @@ namespace Simple.Domain
         public int Version { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        public Guid Id { get; set; }
     }
 }
