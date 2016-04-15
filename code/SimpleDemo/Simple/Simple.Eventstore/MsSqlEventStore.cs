@@ -163,6 +163,7 @@ namespace Simple.Eventstore
                     command.Parameters.AddWithValue("Version", @event.EventNumber);
                     command.Parameters.AddWithValue("Payload", JsonConvert.SerializeObject(@event.Event));
                     command.Parameters.AddWithValue("EventStreamId", @event.EventStreamId);
+                    command.Parameters.AddWithValue("TimeStampUtc", @event.TimeStampUtc);
 
                     command.ExecuteNonQuery();
                 }
@@ -208,8 +209,8 @@ namespace Simple.Eventstore
             " FROM [EventStreams] " +
             " WHERE [Id] = @Id";
 
-        public const string InsertEvents = "INSERT INTO [Events](Id, EventType, Version, Payload, EventStreamId) " + 
-            " VALUES (@Id, @EventType, @Version, @Payload, @EventStreamId)";
+        public const string InsertEvents = "INSERT INTO [Events](Id, EventType, Version, Payload, EventStreamId, TimeStampUtc) " +
+            " VALUES (@Id, @EventType, @Version, @Payload, @EventStreamId, @TimeStampUtc)";
 
         public const string GetEventStream = "SELECT [Id], [EventType], [Version], [Payload], [EventStreamId] " + 
             " FROM [Events]" +

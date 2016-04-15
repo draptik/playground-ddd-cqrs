@@ -13,5 +13,6 @@ CREATE TABLE [dbo].[Events]
     [Version] INT NOT NULL, 
     [Payload] NVARCHAR(MAX) NOT NULL, 
     [EventStreamId] UNIQUEIDENTIFIER NOT NULL, 
+    [TimeStampUtc] DATETIME2 NOT NULL,
     CONSTRAINT [FK_EventStreamId] FOREIGN KEY ([EventStreamId]) REFERENCES [EventStreams]([Id])
 )
