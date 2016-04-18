@@ -28,6 +28,7 @@ namespace Simple.Eventstore
         public EventWrapper RegisterEvent(DomainEvent @event)
         {
             Version++;
+            @event.Version = Version;
             return new EventWrapper(@event, Version, Id);
         }
     }
