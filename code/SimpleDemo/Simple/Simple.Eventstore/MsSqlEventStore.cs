@@ -23,23 +23,25 @@ namespace Simple.Eventstore
 
             var eventStream = new EventStream(new Guid(id), type);
 
-            var sqlConnection = new SqlConnection(_connectionString);
-            sqlConnection.Open();
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
 
-            var transaction = sqlConnection.BeginTransaction();
-            try
-            {
-                AddEventStream(eventStream, transaction);
-                transaction.Commit();
-            }
-            catch (Exception exc)
-            {
-                transaction.Rollback();
-                throw;
-            }
-            finally
-            {
-                sqlConnection.Close();
+                var transaction = sqlConnection.BeginTransaction();
+                try
+                {
+                    AddEventStream(eventStream, transaction);
+                    transaction.Commit();
+                }
+                catch (Exception exc)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
             }
 
             var minVersion = 0;
@@ -58,25 +60,27 @@ namespace Simple.Eventstore
                 CheckForConcurrencyError(expectedVersion, eventStream);
             }
 
-            var sqlConnection = new SqlConnection(_connectionString);
-            sqlConnection.Open();
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
 
-            var transaction = sqlConnection.BeginTransaction();
-            try
-            {
-                AddEvents(domainEvents.Select(@event => eventStream.RegisterEvent(@event)).ToList(), transaction);
-                UpdateStream(eventStream, transaction);
+                var transaction = sqlConnection.BeginTransaction();
+                try
+                {
+                    AddEvents(domainEvents.Select(@event => eventStream.RegisterEvent(@event)).ToList(), transaction);
+                    UpdateStream(eventStream, transaction);
 
-                transaction.Commit();
-            }
-            catch (Exception exc)
-            {
-                transaction.Rollback();
-                throw;
-            }
-            finally
-            {
-                sqlConnection.Close();
+                    transaction.Commit();
+                }
+                catch (Exception exc)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
             }
         }
 
@@ -86,51 +90,10 @@ namespace Simple.Eventstore
             //var type = strings[0];
             var id = strings[1];
 
-            var sqlConnection = new SqlConnection(_connectionString);
-
             var domainEvents = new List<DomainEvent>();
-            using (var command = new SqlCommand(Queries.GetEventStream, sqlConnection))
+
+            using (var sqlConnection = new SqlConnection(_connectionString))
             {
-                command.Parameters.AddWithValue("EventStreamId", new Guid(id));
-                command.Parameters.AddWithValue("MinVersion", fromVersion);
-                command.Parameters.AddWithValue("MaxVersion", toVersion);
-                sqlConnection.Open();
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        //var dbId = reader.GetGuid(reader.GetOrdinal("Id"));
-                        var dbType = reader.GetString(reader.GetOrdinal("EventType"));
-                        var dbVersion = reader.GetInt32(reader.GetOrdinal("Version"));
-                        var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
-                        //var dbTimestampUtc = reader.GetDateTime(reader.GetOrdinal("TimestampUtc"));
-                        //var dbEventStreamId = reader.GetGuid(reader.GetOrdinal("EventStreamId"));
-                        var payload = JsonConvert.DeserializeObject(dbPayload, Type.GetType(dbType));
-                        var domainEvent = payload as DomainEvent;
-                        if (domainEvent != null)
-                        {
-                            domainEvent.Version = dbVersion;
-                            domainEvents.Add(domainEvent);
-                        }
-                    }
-                }
-                sqlConnection.Close();
-            }
-
-            return domainEvents;
-        }
-
-        public async Task<IEnumerable<HistoryItem>> GetHistoryForAggregate(string streamName, int fromVersion, int toVersion)
-        {
-            return await Task.Run(() =>
-            {
-                var strings = streamName.Split('@');
-                var id = strings[1];
-
-                var sqlConnection = new SqlConnection(_connectionString);
-
-                var historyItems = new List<HistoryItem>();
                 using (var command = new SqlCommand(Queries.GetEventStream, sqlConnection))
                 {
                     command.Parameters.AddWithValue("EventStreamId", new Guid(id));
@@ -142,20 +105,66 @@ namespace Simple.Eventstore
                     {
                         while (reader.Read())
                         {
+                            //var dbId = reader.GetGuid(reader.GetOrdinal("Id"));
                             var dbType = reader.GetString(reader.GetOrdinal("EventType"));
                             var dbVersion = reader.GetInt32(reader.GetOrdinal("Version"));
                             var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
-                            var dbTimestampUtc = reader.GetDateTime(reader.GetOrdinal("TimestampUtc"));
-                            historyItems.Add(new HistoryItem
+                            //var dbTimestampUtc = reader.GetDateTime(reader.GetOrdinal("TimestampUtc"));
+                            //var dbEventStreamId = reader.GetGuid(reader.GetOrdinal("EventStreamId"));
+                            var payload = JsonConvert.DeserializeObject(dbPayload, Type.GetType(dbType));
+                            var domainEvent = payload as DomainEvent;
+                            if (domainEvent != null)
                             {
-                                DomainEvent = dbPayload,
-                                TimestampUtc = dbTimestampUtc,
-                                Version = dbVersion,
-                                Type = dbType
-                            });
+                                domainEvent.Version = dbVersion;
+                                domainEvents.Add(domainEvent);
+                            }
                         }
                     }
                     sqlConnection.Close();
+                }
+            }
+
+            return domainEvents;
+        }
+
+        public async Task<IEnumerable<HistoryItem>> GetHistoryForAggregate(string streamName, int fromVersion,
+            int toVersion)
+        {
+            return await Task.Run(() =>
+            {
+                var strings = streamName.Split('@');
+                var id = strings[1];
+
+                var historyItems = new List<HistoryItem>();
+
+                using (var sqlConnection = new SqlConnection(_connectionString))
+                {
+                    using (var command = new SqlCommand(Queries.GetEventStream, sqlConnection))
+                    {
+                        command.Parameters.AddWithValue("EventStreamId", new Guid(id));
+                        command.Parameters.AddWithValue("MinVersion", fromVersion);
+                        command.Parameters.AddWithValue("MaxVersion", toVersion);
+                        sqlConnection.Open();
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var dbType = reader.GetString(reader.GetOrdinal("EventType"));
+                                var dbVersion = reader.GetInt32(reader.GetOrdinal("Version"));
+                                var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
+                                var dbTimestampUtc = reader.GetDateTime(reader.GetOrdinal("TimestampUtc"));
+                                historyItems.Add(new HistoryItem
+                                {
+                                    DomainEvent = dbPayload,
+                                    TimestampUtc = dbTimestampUtc,
+                                    Version = dbVersion,
+                                    Type = dbType
+                                });
+                            }
+                        }
+                        sqlConnection.Close();
+                    }
                 }
 
                 return historyItems;
@@ -175,34 +184,35 @@ namespace Simple.Eventstore
 
             var eventStreamGuid = new Guid(wrapper.StreamName);
 
-            var sqlConnection = new SqlConnection(_connectionString);
-            sqlConnection.Open();
-
-            var transaction = sqlConnection.BeginTransaction();
-            try
+            using (var sqlConnection = new SqlConnection(_connectionString))
             {
-                using (var command = new SqlCommand(Queries.InsertSnapshot, transaction.Connection))
+                sqlConnection.Open();
+                var transaction = sqlConnection.BeginTransaction();
+                try
                 {
-                    command.Transaction = transaction;
+                    using (var command = new SqlCommand(Queries.InsertSnapshot, transaction.Connection))
+                    {
+                        command.Transaction = transaction;
 
-                    command.Parameters.AddWithValue("Id", wrapper.Id);
-                    command.Parameters.AddWithValue("EventStreamId", eventStreamGuid);
-                    command.Parameters.AddWithValue("Payload", JsonConvert.SerializeObject(wrapper.Snapshot));
-                    command.Parameters.AddWithValue("CreatedUtc", wrapper.Created);
+                        command.Parameters.AddWithValue("Id", wrapper.Id);
+                        command.Parameters.AddWithValue("EventStreamId", eventStreamGuid);
+                        command.Parameters.AddWithValue("Payload", JsonConvert.SerializeObject(wrapper.Snapshot));
+                        command.Parameters.AddWithValue("CreatedUtc", wrapper.Created);
 
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
                 }
-
-                transaction.Commit();
-            }
-            catch (Exception exc)
-            {
-                transaction.Rollback();
-                throw;
-            }
-            finally
-            {
-                sqlConnection.Close();
+                catch (Exception exc)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
             }
         }
 
@@ -213,19 +223,20 @@ namespace Simple.Eventstore
 
             var eventStreamId = streamName.Split('@')[1];
 
-            var sqlConnection = new SqlConnection(_connectionString);
-
-            using (var command = new SqlCommand(Queries.GetLatestSnapshot, sqlConnection))
+            using (var sqlConnection = new SqlConnection(_connectionString))
             {
-                command.Parameters.AddWithValue("EventStreamId", eventStreamId);
-                sqlConnection.Open();
-
-                using (var reader = command.ExecuteReader())
+                using (var command = new SqlCommand(Queries.GetLatestSnapshot, sqlConnection))
                 {
-                    while (reader.Read())
+                    command.Parameters.AddWithValue("EventStreamId", eventStreamId);
+                    sqlConnection.Open();
+
+                    using (var reader = command.ExecuteReader())
                     {
-                        var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
-                        result = (T) JsonConvert.DeserializeObject(dbPayload, typeof (T));
+                        while (reader.Read())
+                        {
+                            var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
+                            result = (T) JsonConvert.DeserializeObject(dbPayload, typeof (T));
+                        }
                     }
                 }
             }
@@ -237,16 +248,18 @@ namespace Simple.Eventstore
         {
             var result = new List<Guid>();
 
-            var sqlConnection = new SqlConnection(_connectionString);
-            using (var command = new SqlCommand(Queries.GetAllEventStreamIds, sqlConnection))
+            using (var sqlConnection = new SqlConnection(_connectionString))
             {
-                sqlConnection.Open();
-                using (var reader = command.ExecuteReader())
+                using (var command = new SqlCommand(Queries.GetAllEventStreamIds, sqlConnection))
                 {
-                    while (reader.Read())
+                    sqlConnection.Open();
+                    using (var reader = command.ExecuteReader())
                     {
-                        var dbId = reader.GetGuid(reader.GetOrdinal("Id"));
-                        result.Add(dbId);
+                        while (reader.Read())
+                        {
+                            var dbId = reader.GetGuid(reader.GetOrdinal("Id"));
+                            result.Add(dbId);
+                        }
                     }
                 }
             }
@@ -314,10 +327,9 @@ namespace Simple.Eventstore
 
         private EventStream GetEventStreamMeta(Guid eventStreamId)
         {
-            var sqlConnection = new SqlConnection(_connectionString);
-
             EventStream result = null;
 
+            using (var sqlConnection = new SqlConnection(_connectionString))
             using (var command = new SqlCommand(Queries.GetEventStreamMeta, sqlConnection))
             {
                 command.Parameters.AddWithValue("Id", eventStreamId);
