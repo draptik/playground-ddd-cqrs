@@ -6,7 +6,6 @@ using Simple.CommandStack.Requests;
 using Simple.CommandStack.Responses;
 using Simple.CommandStack.ViewModels;
 using Simple.Contracts;
-using Simple.Domain;
 using Simple.Messages;
 
 namespace Simple.ApplicationService
@@ -82,6 +81,5 @@ namespace Simple.ApplicationService
                     TimeSpan.FromSeconds(10));
             return client;
         }
-       
     }
 }

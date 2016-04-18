@@ -49,10 +49,12 @@
     <Compile Include="Requests\CreateCustomerRequest.cs" />
     <Compile Include="Requests\GetAllCustomersRequest.cs" />
     <Compile Include="Requests\GetCustomerRequest.cs" />
+    <Compile Include="Requests\GetHistoryForCustomerRequest.cs" />
     <Compile Include="Responses\ChangeCustomerAddressResponse.cs" />
     <Compile Include="Responses\CreateCustomerResponse.cs" />
     <Compile Include="Responses\GetAllCustomersResponse.cs" />
     <Compile Include="Responses\GetCustomerResponse.cs" />
+    <Compile Include="Responses\GetHistoryForCustomerResponse.cs" />
     <Compile Include="ViewModels\ChangeCustomerAddressViewModel.cs" />
     <Compile Include="ViewModels\CreateCustomerViewModel.cs" />
   </ItemGroup>

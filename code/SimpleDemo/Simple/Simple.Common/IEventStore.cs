@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Simple.Common
 {
@@ -16,5 +17,7 @@ namespace Simple.Common
         T GetLatestSnapshot<T>(string streamName) where T : class;
 
         IEnumerable<Guid> GetAllStreamIds();
+
+        Task<IEnumerable<HistoryItem>> GetHistoryForAggregate(string streamName, int fromVersion, int toVersion);
     }
 }

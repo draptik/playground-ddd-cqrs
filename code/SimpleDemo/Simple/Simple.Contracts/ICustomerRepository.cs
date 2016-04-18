@@ -1,7 +1,8 @@
 ﻿using Simple.Domain;
 using System;
 using System.Collections.Generic;
-using Simple.CommandStack.Responses;
+using System.Threading.Tasks;
+using Simple.Common;
 
 namespace Simple.Contracts
 {
@@ -13,5 +14,6 @@ namespace Simple.Contracts
         IEnumerable<Guid> GetAllIds();
         void SaveSnapshot(CustomerSnapshot snapshot, Customer customer);
         CustomerSnapshot GetLatestSnapshot(Guid customerId);
+        Task<IEnumerable<HistoryItem>> GetHistoryForCustomer(Guid customerId);
     }
 }

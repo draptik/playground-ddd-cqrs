@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Simple.Common;
 using Simple.Contracts;
 using Simple.Domain;
@@ -73,6 +74,12 @@ namespace Simple.Repositories
         public CustomerSnapshot GetLatestSnapshot(Guid customerId)
         {
             return _eventStore.GetLatestSnapshot<CustomerSnapshot>(StreamNameFor(customerId));
+        }
+
+        public async Task<IEnumerable<HistoryItem>> GetHistoryForCustomer(Guid customerId)
+        {
+            var history = await _eventStore.GetHistoryForAggregate(StreamNameFor(customerId), fromVersion: 0, toVersion: int.MaxValue);
+            return history;
         }
 
         private string StreamNameFor(Guid id)

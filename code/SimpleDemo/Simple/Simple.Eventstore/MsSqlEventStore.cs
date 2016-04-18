@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Simple.Common;
 using Simple.Common.Exceptions;
@@ -118,6 +119,47 @@ namespace Simple.Eventstore
             }
 
             return domainEvents;
+        }
+
+        public async Task<IEnumerable<HistoryItem>> GetHistoryForAggregate(string streamName, int fromVersion, int toVersion)
+        {
+            return await Task.Run(() =>
+            {
+                var strings = streamName.Split('@');
+                var id = strings[1];
+
+                var sqlConnection = new SqlConnection(_connectionString);
+
+                var historyItems = new List<HistoryItem>();
+                using (var command = new SqlCommand(Queries.GetEventStream, sqlConnection))
+                {
+                    command.Parameters.AddWithValue("EventStreamId", new Guid(id));
+                    command.Parameters.AddWithValue("MinVersion", fromVersion);
+                    command.Parameters.AddWithValue("MaxVersion", toVersion);
+                    sqlConnection.Open();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var dbType = reader.GetString(reader.GetOrdinal("EventType"));
+                            var dbVersion = reader.GetInt32(reader.GetOrdinal("Version"));
+                            var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
+                            var dbTimestampUtc = reader.GetDateTime(reader.GetOrdinal("TimestampUtc"));
+                            historyItems.Add(new HistoryItem
+                            {
+                                DomainEvent = dbPayload,
+                                TimestampUtc = dbTimestampUtc,
+                                Version = dbVersion,
+                                Type = dbType
+                            });
+                        }
+                    }
+                    sqlConnection.Close();
+                }
+
+                return historyItems;
+            });
         }
 
         public void AddSnapshot<T>(string streamName, T snapshot)

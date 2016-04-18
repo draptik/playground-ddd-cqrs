@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="EventStoreHandlers\ChangeCustomerAddress.cs" />
     <Compile Include="EventStoreHandlers\CreateCustomerConsumer.cs" />
+    <Compile Include="EventStoreHandlers\GetHistoryForCustomer.cs" />
     <Compile Include="ReadModelHandlers\GetAllCustomersConsumer.cs" />
     <Compile Include="ReadModelHandlers\GetCustomerConsumer.cs" />
     <Compile Include="ReadModelHandlers\UpdateCustomerCondensedReadModelConsumer.cs" />

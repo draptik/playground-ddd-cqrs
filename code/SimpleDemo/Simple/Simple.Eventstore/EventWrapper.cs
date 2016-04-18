@@ -24,6 +24,7 @@ namespace Simple.Eventstore
         public Guid EventStreamId { get; private set; }
 
         public int EventNumber { get; private set; }
+
         public DateTime TimeStampUtc { get; private set; }
     }
 }
