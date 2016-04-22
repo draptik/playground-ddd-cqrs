@@ -13,7 +13,7 @@ namespace Simple.Eventstore
 
         public string StreamName { get; set; }
 
-        public Object Snapshot { get; set; }
+        public object Snapshot { get; set; }
 
         public DateTime Created { get; set; }
     }

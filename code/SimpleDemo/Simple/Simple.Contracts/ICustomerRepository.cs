@@ -1,8 +1,8 @@
-﻿using Simple.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Simple.Common;
+using Simple.Domain;
 
 namespace Simple.Contracts
 {

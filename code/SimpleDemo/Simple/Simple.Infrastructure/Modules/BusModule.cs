@@ -10,19 +10,17 @@ namespace Simple.Infrastructure.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterConsumers(typeof (CreateCustomerConsumer).Assembly);
+            builder.RegisterConsumers(typeof(CreateCustomerConsumer).Assembly);
 
             var useInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
 
-            if (useInMemoryBus)
-            {
+            if (useInMemoryBus) {
                 builder.Register(ConfigureInMemoryBus)
                     .SingleInstance()
                     .As<IBusControl>()
                     .As<IBus>();
             }
-            else
-            {
+            else {
                 builder.Register(ConfigureRabbitMq)
                     .SingleInstance()
                     .As<IBusControl>()
@@ -34,10 +32,7 @@ namespace Simple.Infrastructure.Modules
         {
             var busControl =
                 Bus.Factory.CreateUsingInMemory(
-                    cfg =>
-                    {
-                        cfg.ReceiveEndpoint(ConfigurationManager.AppSettings["Endpoint"], ep => ep.LoadFrom(context));
-                    });
+                    cfg => { cfg.ReceiveEndpoint(ConfigurationManager.AppSettings["Endpoint"], ep => ep.LoadFrom(context)); });
             return busControl;
         }
 
@@ -45,11 +40,18 @@ namespace Simple.Infrastructure.Modules
         {
             var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                var host = cfg.Host(new Uri(ConfigurationManager.AppSettings["RabbitMqUri"]), h =>
-                {
-                    h.Username(ConfigurationManager.AppSettings["RabbitMqUser"]);
-                    h.Password(ConfigurationManager.AppSettings["RabbitMqPassword"]);
-                });
+                var host = cfg.Host(new Uri(ConfigurationManager.AppSettings["RabbitMqUri"]),
+                    h =>
+                    {
+                        h.Username(
+                            ConfigurationManager.AppSettings[
+                                "RabbitMqUser"
+                                ]);
+                        h.Password(
+                            ConfigurationManager.AppSettings[
+                                "RabbitMqPassword"
+                                ]);
+                    });
 
                 cfg.ReceiveEndpoint(host, ConfigurationManager.AppSettings["Endpoint"], ec => { ec.LoadFrom(context); });
             });

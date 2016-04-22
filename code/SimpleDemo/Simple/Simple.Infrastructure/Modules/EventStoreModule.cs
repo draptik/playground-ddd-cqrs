@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Simple.Common;
 using Simple.Eventstore;
 
 namespace Simple.Infrastructure.Modules
@@ -8,7 +7,7 @@ namespace Simple.Infrastructure.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof (MsSqlEventStore).Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof(MsSqlEventStore).Assembly).AsImplementedInterfaces();
         }
     }
 }

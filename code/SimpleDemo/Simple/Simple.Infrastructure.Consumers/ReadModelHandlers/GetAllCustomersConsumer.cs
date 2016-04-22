@@ -18,16 +18,14 @@ namespace Simple.Infrastructure.Consumers.ReadModelHandlers
 
         public async Task Consume(ConsumeContext<IGetAllCustomersRequest> context)
         {
-            try
-            {
+            try {
                 await context.RespondAsync(new GetAllCustomersResponse
                 {
                     Customers = _readModel.GetAll(),
                     Message = "ok"
                 });
             }
-            catch (Exception exc)
-            {
+            catch (Exception exc) {
                 await
                     context.RespondAsync(new GetAllCustomersResponse
                     {

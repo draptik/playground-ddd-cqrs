@@ -14,8 +14,7 @@ namespace Simple.Common
 
         public bool Equals(T other)
         {
-            if (other == null)
-            {
+            if (other == null) {
                 return false;
             }
             return GetAttributesToIncludeInEqualityCheck().SequenceEqual(other.GetAttributesToIncludeInEqualityCheck());

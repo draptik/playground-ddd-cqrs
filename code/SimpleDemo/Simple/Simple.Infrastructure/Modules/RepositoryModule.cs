@@ -7,7 +7,7 @@ namespace Simple.Infrastructure.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof (CustomerRepository).Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof(CustomerRepository).Assembly).AsImplementedInterfaces();
         }
     }
 }

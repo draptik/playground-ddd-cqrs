@@ -18,13 +18,11 @@ namespace Simple.Readmodels
         {
             var customer = _context.CustomerForLists.SingleOrDefault(x => x.Id.Equals(command.Id));
 
-            if (customer != null)
-            {
+            if (customer != null) {
                 customer.Name = command.Name;
             }
-            else
-            {
-                _context.CustomerForLists.Add(new CustomerForList { Id = command.Id, Name = command.Name });
+            else {
+                _context.CustomerForLists.Add(new CustomerForList {Id = command.Id, Name = command.Name});
             }
 
             _context.SaveChanges();

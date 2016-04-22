@@ -1,5 +1,4 @@
 ﻿using System;
-using Simple.Domain;
 using Simple.Domain.QueryModels;
 
 namespace Simple.CommandStack.Responses

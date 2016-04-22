@@ -36,8 +36,7 @@ namespace Simple.Repositories
             const int toEventNumber = int.MaxValue;
 
             var snapshot = _eventStore.GetLatestSnapshot<CustomerSnapshot>(StreamNameFor(customerId));
-            if (snapshot != null)
-            {
+            if (snapshot != null) {
                 fromEventNumber = snapshot.Version + 1; // load only events after snapshot
             }
 
@@ -45,12 +44,11 @@ namespace Simple.Repositories
 
             Customer customer = null;
 
-            customer = snapshot != null 
-                ? new Customer(snapshot) 
+            customer = snapshot != null
+                ? new Customer(snapshot)
                 : new Customer();
-            
-            foreach (var @event in domainEvents.OrderBy(x => x.Version))
-            {
+
+            foreach (var @event in domainEvents.OrderBy(x => x.Version)) {
                 customer.Apply(@event);
             }
 
@@ -65,8 +63,7 @@ namespace Simple.Repositories
         public void SaveSnapshot(CustomerSnapshot snapshot, Customer customer)
         {
             var previousSnapshot = GetLatestSnapshot(customer.Id);
-            if (previousSnapshot == null || previousSnapshot.Version < snapshot.Version)
-            {
+            if (previousSnapshot == null || previousSnapshot.Version < snapshot.Version) {
                 _eventStore.AddSnapshot(StreamNameFor(customer.Id), snapshot);
             }
         }
@@ -84,13 +81,12 @@ namespace Simple.Repositories
 
         private string StreamNameFor(Guid id)
         {
-            return $"{typeof (Customer).Name}@{id}";
+            return $"{typeof(Customer).Name}@{id}";
         }
 
         private int? GetExpectedVersion(int expectedVersion)
         {
-            if (expectedVersion == 0)
-            {
+            if (expectedVersion == 0) {
                 // first time the aggregate is stored, there is no expected version
                 return null;
             }

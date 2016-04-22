@@ -20,15 +20,13 @@ namespace Simple.Readmodels
         {
             var customer = _context.CustomerDetails.SingleOrDefault(x => x.Id.Equals(command.Id));
 
-            if (customer != null)
-            {
+            if (customer != null) {
                 // should never happen
                 customer.Name = command.Name;
                 customer.Address = command.Address;
             }
-            else
-            {
-                _context.CustomerDetails.Add(new CustomerDetails { Id = command.Id, Name = command.Name, Address = command.Address });
+            else {
+                _context.CustomerDetails.Add(new CustomerDetails {Id = command.Id, Name = command.Name, Address = command.Address});
             }
 
             _context.SaveChanges();
@@ -37,8 +35,7 @@ namespace Simple.Readmodels
         public void Update(ICustomerAddressChangedEvent command)
         {
             var customer = _context.CustomerDetails.SingleOrDefault(x => x.Id.Equals(command.Id));
-            if (customer != null)
-            {
+            if (customer != null) {
                 customer.Address = command.Address;
                 _context.SaveChanges();
             }
@@ -47,7 +44,7 @@ namespace Simple.Readmodels
         public CustomerDetails FindById(Guid id)
         {
             // TODO error handling
-            var result =  _context.CustomerDetails.SingleOrDefault(x => x.Id.Equals(id));
+            var result = _context.CustomerDetails.SingleOrDefault(x => x.Id.Equals(id));
             return result;
         }
 

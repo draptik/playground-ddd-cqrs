@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Simple.Domain.QueryModels;
 
 namespace Simple.CommandStack.Responses
@@ -8,6 +7,5 @@ namespace Simple.CommandStack.Responses
     {
         public IEnumerable<CustomerForList> Customers { get; set; }
         public string Message { get; set; }
-
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Simple.Readmodels
+﻿namespace Simple.Readmodels
 {
     //public class Customer
     //{

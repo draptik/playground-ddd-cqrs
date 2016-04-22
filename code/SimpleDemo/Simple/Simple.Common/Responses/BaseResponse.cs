@@ -4,10 +4,10 @@
     {
         public BaseResponse()
         {
-            this.Success = true;
+            Success = true;
         }
 
         public string Message { get; set; }
-        public bool Success { get; set; } 
+        public bool Success { get; set; }
     }
 }

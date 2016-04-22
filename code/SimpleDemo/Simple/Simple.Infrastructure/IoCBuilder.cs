@@ -9,9 +9,7 @@ namespace Simple.Infrastructure
 {
     public class IoCBuilder
     {
-        private static IContainer _container;
-
-        public static IContainer Container => _container;
+        public static IContainer Container { get; private set; }
 
         public static void InitWeb(Assembly assembly, HttpConfiguration configuration)
         {
@@ -30,14 +28,14 @@ namespace Simple.Infrastructure
             builder.RegisterModule<ReadModelModule>();
             builder.RegisterModule<SnapshotModule>();
 
-            _container = builder.Build();
+            Container = builder.Build();
 
             // Start service bus
-            var busControl = _container.Resolve<IBusControl>();
+            var busControl = Container.Resolve<IBusControl>();
             busControl.Start();
 
             // Set the dependency resolver for Web API.
-            var webApiResolver = new AutofacWebApiDependencyResolver(_container);
+            var webApiResolver = new AutofacWebApiDependencyResolver(Container);
             configuration.DependencyResolver = webApiResolver;
         }
     }

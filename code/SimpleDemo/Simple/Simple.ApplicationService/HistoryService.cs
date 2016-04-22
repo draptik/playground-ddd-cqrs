@@ -33,9 +33,9 @@ namespace Simple.ApplicationService
 
         private IRequestClient<IGetHistoryForCustomerRequest, GetHistoryForCustomerResponse> CreateHistoryClient()
         {
-            return
-                _bus.CreateRequestClient<IGetHistoryForCustomerRequest, GetHistoryForCustomerResponse>(
-                    this._serviceAddress, TimeSpan.FromSeconds(30));
+            return _bus.CreateRequestClient<IGetHistoryForCustomerRequest, GetHistoryForCustomerResponse>(
+                _serviceAddress,
+                TimeSpan.FromSeconds(30));
         }
     }
 }

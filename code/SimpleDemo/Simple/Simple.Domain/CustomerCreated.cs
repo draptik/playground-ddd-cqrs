@@ -5,13 +5,13 @@ namespace Simple.Domain
 {
     public class CustomerCreated : DomainEvent
     {
-        public string Address { get; }
-        public string Name { get; }
-
         public CustomerCreated(Guid aggregateId, string name, string address) : base(aggregateId)
         {
-            this.Name = name;
-            this.Address = address;
+            Name = name;
+            Address = address;
         }
+
+        public string Address { get; }
+        public string Name { get; }
     }
 }

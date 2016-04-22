@@ -6,7 +6,7 @@ namespace Simple.Common
     {
         protected Entity()
         {
-            this.Id = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
         public Guid Id { get; protected set; }

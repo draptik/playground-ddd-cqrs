@@ -6,14 +6,14 @@ namespace Simple.ApplicationService
 {
     public class RequestClientCreator : IRequestClientCreator
     {
-        private readonly IBusControl bus;
-        private readonly Uri serviceAddress;
+        private readonly IBusControl _bus;
+        private readonly Uri _serviceAddress;
 
         public RequestClientCreator(IBusControl bus)
         {
-            this.bus = bus;
+            _bus = bus;
             var useInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
-            this.serviceAddress = useInMemoryBus
+            _serviceAddress = useInMemoryBus
                 ? new Uri(ConfigurationManager.AppSettings["ServiceAddressInMemory"])
                 : new Uri(ConfigurationManager.AppSettings["ServiceAddress"]);
         }
@@ -22,7 +22,7 @@ namespace Simple.ApplicationService
             where TRequest : class
             where TResponse : class
         {
-            return this.bus.CreateRequestClient<TRequest, TResponse>(this.serviceAddress, TimeSpan.FromSeconds(30));
+            return _bus.CreateRequestClient<TRequest, TResponse>(_serviceAddress, TimeSpan.FromSeconds(30));
         }
     }
 }

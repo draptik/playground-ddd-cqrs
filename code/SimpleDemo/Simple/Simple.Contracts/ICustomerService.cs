@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Simple.CommandStack.Responses;
 using Simple.CommandStack.ViewModels;
-using Simple.Domain;
 
 namespace Simple.Contracts
 {

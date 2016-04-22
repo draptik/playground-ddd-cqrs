@@ -11,12 +11,12 @@ namespace Simple.Infrastructure.Consumers.ReadModelHandlers
 
         public UpdateCustomerCondensedReadModelConsumer(IUpdateCustomerCondensedRepository repository)
         {
-            this._repository = repository;
+            _repository = repository;
         }
 
         public Task Consume(ConsumeContext<ICustomerCreatedEvent> context)
         {
-            this._repository.Update(context.Message);
+            _repository.Update(context.Message);
             return Task.FromResult(0);
         }
     }

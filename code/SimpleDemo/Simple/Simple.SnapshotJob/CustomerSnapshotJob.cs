@@ -22,10 +22,8 @@ namespace Simple.SnapshotJob
 
         public void Run()
         {
-            while (true)
-            {
-                foreach (var id in GetIds())
-                {
+            while (true) {
+                foreach (var id in GetIds()) {
                     var customer = _repository.FindById(id);
                     var snapshot = customer.GetCustomerSnapshot();
                     _repository.SaveSnapshot(snapshot, customer);

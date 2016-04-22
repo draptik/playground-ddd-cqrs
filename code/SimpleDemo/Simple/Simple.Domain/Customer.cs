@@ -5,30 +5,28 @@ namespace Simple.Domain
 {
     public class Customer : EventSourcedAggregate
     {
-        public Customer()
-        {
-        }
+        public Customer() {}
 
         public Customer(CustomerSnapshot snapshot)
         {
-            this.InitialVersion = snapshot.Version;
+            InitialVersion = snapshot.Version;
             Version = snapshot.Version;
             Name = snapshot.Name;
             Address = snapshot.Address;
-            this.Id = snapshot.Id;
+            Id = snapshot.Id;
         }
 
         public Customer(string name, string address)
         {
-            this.Causes(new CustomerCreated(Guid.NewGuid(), name, address));
+            Causes(new CustomerCreated(Guid.NewGuid(), name, address));
         }
 
         public Customer(Guid aggregateId, string address)
         {
-            this.Causes(new CustomerAddressChanged(aggregateId, address));
+            Causes(new CustomerAddressChanged(aggregateId, address));
         }
 
-        public int InitialVersion { get; } = 0;
+        public int InitialVersion { get; }
 
         public string Name { get; set; }
         public string Address { get; set; }
@@ -47,8 +45,8 @@ namespace Simple.Domain
 
         private void Causes(DomainEvent @event)
         {
-            this.Changes.Add(@event);
-            this.Apply(@event);
+            Changes.Add(@event);
+            Apply(@event);
         }
 
         public override void Apply(DomainEvent @event)
@@ -58,16 +56,16 @@ namespace Simple.Domain
 
         private void When(CustomerCreated customerCreated)
         {
-            this.Id = customerCreated.AggregateId;
-            this.Name = customerCreated.Name;
-            this.Address = customerCreated.Address;
+            Id = customerCreated.AggregateId;
+            Name = customerCreated.Name;
+            Address = customerCreated.Address;
         }
 
         private void When(CustomerAddressChanged customerAddressChanged)
         {
-            this.Id = customerAddressChanged.AggregateId;
-            this.Address = customerAddressChanged.Address;
-            this.Version = customerAddressChanged.Version;
+            Id = customerAddressChanged.AggregateId;
+            Address = customerAddressChanged.Address;
+            Version = customerAddressChanged.Version;
         }
     }
 

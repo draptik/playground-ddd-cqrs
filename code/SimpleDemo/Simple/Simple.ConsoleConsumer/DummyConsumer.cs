@@ -12,7 +12,7 @@ namespace Simple.ConsoleConsumer
             Console.WriteLine("hallo");
 
             Console.WriteLine($"Name: {context.Message.Name}");
-            
+
             return Task.FromResult(0);
         }
     }
