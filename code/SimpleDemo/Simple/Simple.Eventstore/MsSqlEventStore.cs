@@ -17,11 +17,7 @@ namespace Simple.Eventstore
 
         public void CreateNewStream(string streamName, IEnumerable<DomainEvent> domainEvents)
         {
-            var strings = streamName.Split('@');
-            var type = strings[0];
-            var id = strings[1];
-
-            var eventStream = new EventStream(new Guid(id), type);
+            var eventStream = new EventStream(streamName.Id(), streamName.Type());
 
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
@@ -50,10 +46,7 @@ namespace Simple.Eventstore
 
         public void AppendEventsToStream(string streamName, IEnumerable<DomainEvent> domainEvents, int? expectedVersion)
         {
-            var strings = streamName.Split('@');
-            var id = strings[1];
-
-            var eventStream = GetEventStreamMeta(new Guid(id));
+            var eventStream = GetEventStreamMeta(streamName.Id());
 
             if (expectedVersion != null)
             {
@@ -86,17 +79,13 @@ namespace Simple.Eventstore
 
         public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
         {
-            var strings = streamName.Split('@');
-            //var type = strings[0];
-            var id = strings[1];
-
             var domainEvents = new List<DomainEvent>();
 
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand(Queries.GetEventStream, sqlConnection))
                 {
-                    command.Parameters.AddWithValue("EventStreamId", new Guid(id));
+                    command.Parameters.AddWithValue("EventStreamId", streamName.Id());
                     command.Parameters.AddWithValue("MinVersion", fromVersion);
                     command.Parameters.AddWithValue("MaxVersion", toVersion);
                     sqlConnection.Open();
@@ -132,16 +121,13 @@ namespace Simple.Eventstore
         {
             return await Task.Run(() =>
             {
-                var strings = streamName.Split('@');
-                var id = strings[1];
-
                 var historyItems = new List<HistoryItem>();
 
                 using (var sqlConnection = new SqlConnection(_connectionString))
                 {
                     using (var command = new SqlCommand(Queries.GetEventStream, sqlConnection))
                     {
-                        command.Parameters.AddWithValue("EventStreamId", new Guid(id));
+                        command.Parameters.AddWithValue("EventStreamId", streamName.Id());
                         command.Parameters.AddWithValue("MinVersion", fromVersion);
                         command.Parameters.AddWithValue("MaxVersion", toVersion);
                         sqlConnection.Open();
@@ -173,11 +159,9 @@ namespace Simple.Eventstore
 
         public void AddSnapshot<T>(string streamName, T snapshot)
         {
-            var eventStreamId = streamName.Split('@')[1];
-
             var wrapper = new SnapshotWrapper
             {
-                StreamName = eventStreamId,
+                StreamName = streamName.Id().ToString(),
                 Snapshot = snapshot,
                 Created = DateTime.UtcNow
             };
@@ -216,18 +200,15 @@ namespace Simple.Eventstore
             }
         }
 
-        /// <typeparam name="T">Snapshot object (i.e. CustomerSnapshot)</typeparam>
-        public T GetLatestSnapshot<T>(string streamName) where T : class
+        public TSnapshot GetLatestSnapshot<TSnapshot>(string streamName) where TSnapshot : class
         {
-            T result = null;
-
-            var eventStreamId = streamName.Split('@')[1];
+            TSnapshot result = null;
 
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand(Queries.GetLatestSnapshot, sqlConnection))
                 {
-                    command.Parameters.AddWithValue("EventStreamId", eventStreamId);
+                    command.Parameters.AddWithValue("EventStreamId", streamName.Id().ToString());
                     sqlConnection.Open();
 
                     using (var reader = command.ExecuteReader())
@@ -235,7 +216,7 @@ namespace Simple.Eventstore
                         while (reader.Read())
                         {
                             var dbPayload = reader.GetString(reader.GetOrdinal("Payload"));
-                            result = (T) JsonConvert.DeserializeObject(dbPayload, typeof(T));
+                            result = (TSnapshot) JsonConvert.DeserializeObject(dbPayload, typeof(TSnapshot));
                         }
                     }
                 }
