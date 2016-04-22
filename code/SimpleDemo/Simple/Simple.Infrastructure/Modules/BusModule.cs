@@ -14,13 +14,15 @@ namespace Simple.Infrastructure.Modules
 
             var useInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
 
-            if (useInMemoryBus) {
+            if (useInMemoryBus)
+            {
                 builder.Register(ConfigureInMemoryBus)
                     .SingleInstance()
                     .As<IBusControl>()
                     .As<IBus>();
             }
-            else {
+            else
+            {
                 builder.Register(ConfigureRabbitMq)
                     .SingleInstance()
                     .As<IBusControl>()

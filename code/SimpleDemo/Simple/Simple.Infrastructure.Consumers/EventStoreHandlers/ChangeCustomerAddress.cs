@@ -20,7 +20,8 @@ namespace Simple.Infrastructure.Consumers.EventStoreHandlers
 
         public async Task Consume(ConsumeContext<IChangeCustomerAddressRequest> context)
         {
-            try {
+            try
+            {
                 var customer = Convert(context.Message);
                 _repository.Save(customer);
 
@@ -36,7 +37,8 @@ namespace Simple.Infrastructure.Consumers.EventStoreHandlers
                     Message = "OK"
                 });
             }
-            catch (Exception exc) {
+            catch (Exception exc)
+            {
                 await
                     context.RespondAsync(new ChangeCustomerAddressResponse
                     {

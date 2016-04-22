@@ -18,7 +18,8 @@ namespace Simple.Infrastructure.Consumers.ReadModelHandlers
 
         public async Task Consume(ConsumeContext<IGetCustomerRequest> context)
         {
-            try {
+            try
+            {
                 await context.RespondAsync(new GetCustomerResponse
                 {
                     Customer = _readModel.FindById(context.Message.CustomerId),
@@ -26,7 +27,8 @@ namespace Simple.Infrastructure.Consumers.ReadModelHandlers
                     ResponseId = context.Message.CustomerId
                 });
             }
-            catch (Exception exc) {
+            catch (Exception exc)
+            {
                 await
                     context.RespondAsync(new GetCustomerResponse
                     {
