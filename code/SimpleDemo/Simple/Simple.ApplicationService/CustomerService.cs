@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Configuration;
 using System.Threading.Tasks;
-using MassTransit;
 using Simple.CommandStack.Requests;
 using Simple.CommandStack.Responses;
 using Simple.CommandStack.ViewModels;
@@ -12,23 +10,16 @@ namespace Simple.ApplicationService
 {
     public class CustomerService : ICustomerService
     {
-        private readonly IBusControl _bus;
-        private readonly Uri serviceAddress;
+        private readonly IRequestClientCreator requestClientCreator;
 
-        public CustomerService(IBusControl bus)
+        public CustomerService(IRequestClientCreator requestClientCreator)
         {
-            this._bus = bus;
-
-            var useInMemoryBus = bool.Parse(ConfigurationManager.AppSettings["UseInMemoryBus"]);
-            this.serviceAddress = useInMemoryBus
-                ? new Uri(ConfigurationManager.AppSettings["ServiceAddressInMemory"])
-                : new Uri(ConfigurationManager.AppSettings["ServiceAddress"]);
+            this.requestClientCreator = requestClientCreator;
         }
 
         public async Task<CreateCustomerResponse> CreateCustomer(CreateCustomerViewModel customer)
         {
-            var client = this.CreateRequestClient();
-            
+            var client = this.requestClientCreator.Create<ICreateCustomerRequest, CreateCustomerResponse>();
             var createCustomerRequest = new CreateCustomerRequest(Guid.NewGuid(), customer.Name, customer.Address);
             var response = await client.Request(createCustomerRequest);
             return response;
@@ -36,50 +27,23 @@ namespace Simple.ApplicationService
 
         public async Task<ChangeCustomerAddressResponse> ChangeCustomerAddress(Guid customerId, string address)
         {
-            var client = this.CreateChangeAddressClient();
+            var client = this.requestClientCreator.Create<IChangeCustomerAddressRequest, ChangeCustomerAddressResponse>();
             var response = await client.Request(new ChangeCustomerAddressRequest(Guid.NewGuid(), customerId, address));
             return response;
         }
+
         public async Task<GetCustomerResponse> GetCustomer(Guid customerId)
         {
-            var client = this.CreateGetCustomer();
+            var client = this.requestClientCreator.Create<IGetCustomerRequest, GetCustomerResponse>();
             var response = await client.Request(new GetCustomerRequest(Guid.NewGuid(), customerId));
             return response;
         }
 
         public async Task<GetAllCustomersResponse> GetAllCustomers()
         {
-            var client = this.CreateGetAllCustomersClient();
+            var client = this.requestClientCreator.Create<IGetAllCustomersRequest, GetAllCustomersResponse>();
             var response = await client.Request(new GetAllCustomersRequest());
             return response;
-        }
-
-        private IRequestClient<IGetCustomerRequest, GetCustomerResponse> CreateGetCustomer()
-        {
-            var client = this._bus.CreateRequestClient<IGetCustomerRequest, GetCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(30));
-            return client;
-        }
-
-        private IRequestClient<ICreateCustomerRequest, CreateCustomerResponse> CreateRequestClient()
-        {
-            var client = this._bus.CreateRequestClient<ICreateCustomerRequest, CreateCustomerResponse>(this.serviceAddress, TimeSpan.FromSeconds(10));
-            return client;
-        }
-
-        private IRequestClient<IChangeCustomerAddressRequest, ChangeCustomerAddressResponse> CreateChangeAddressClient()
-        {
-            var client =
-                this._bus.CreateRequestClient<IChangeCustomerAddressRequest, ChangeCustomerAddressResponse>(this.serviceAddress,
-                    TimeSpan.FromSeconds(10));
-            return client;
-        }
-
-        private IRequestClient<IGetAllCustomersRequest, GetAllCustomersResponse> CreateGetAllCustomersClient()
-        {
-            var client =
-                this._bus.CreateRequestClient<IGetAllCustomersRequest, GetAllCustomersResponse>(this.serviceAddress,
-                    TimeSpan.FromSeconds(10));
-            return client;
         }
     }
 }

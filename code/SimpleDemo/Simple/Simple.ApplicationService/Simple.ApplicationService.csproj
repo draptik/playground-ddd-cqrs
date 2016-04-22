@@ -55,7 +55,9 @@
   <ItemGroup>
     <Compile Include="CustomerService.cs" />
     <Compile Include="HistoryService.cs" />
+    <Compile Include="IRequestClientCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestClientCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simple.CommandStack\Simple.CommandStack.csproj">
